@@ -38,7 +38,7 @@ class Game extends Component {
                 <tr key={i}>{
                   row.filter((cell, i) => i >= left && i <= right)
                     .map((cell, j) => {
-                      return <td key={j} className={`entity${cell}`} />
+                      return <td key={j} className={cell.type} />
                     })
                   }</tr>
               )

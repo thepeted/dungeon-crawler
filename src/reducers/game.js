@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import createLevel from '../bin/level-creator';
+import createLevel from '../bin/map-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
 import * as types from '../constants/action-types'
 
@@ -18,8 +18,8 @@ export default (state = initialState, action) => {
       if (!state.entities[y + nextY][x + nextX]) return state;
       //if the move is valid we can update the state
       let newState = _.clone(state);
-      newState.entities[y][x] = 1; //replace the old space with a floor tile
-      newState.entities[y + nextY][x + nextX] = 2;
+      newState.entities[y + nextY][x + nextX] = state.entities[y][x]; //move existing player object
+      newState.entities[y][x] = { type: 'floor'}; //replace the old space with a floor tile
       newState.playerPosition.x = x + nextX;
       newState.playerPosition.y = y + nextY;
 

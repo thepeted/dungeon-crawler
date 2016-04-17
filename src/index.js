@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 import reducers from './reducers';
 
-import createLevel from './bin/level-creator';
+import createLevel from './bin/map-creator';
 import App from './components/app';
 
 ReactDOM.render(
