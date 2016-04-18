@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { playerMove } from '../actions/'
+import playerInput from '../actions/'
 
 
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../constants/settings';
@@ -31,7 +31,7 @@ class Game extends Component {
 
     return (
       <table>
-        <caption>(Use WASD to move)</caption>
+        <caption>Player Health: {this.props.game.playerHealth}</caption>
         <tbody>
         {
           this.props.game.entities.filter((row, i) => i >= top && i <= bottom)
@@ -55,17 +55,17 @@ class Game extends Component {
     switch(e.keyCode) {
         //north
       case 87:
-        this.props.playerMove([0,-1]);
+        this.props.playerInput([0,-1]);
         break;
         //east
       case 68:
-        this.props.playerMove([1,0]);
+        this.props.playerInput([1,0]);
         break;
       case 83:
-        this.props.playerMove([0,1]);
+        this.props.playerInput([0,1]);
         break;
       case 65:
-        this.props.playerMove([-1,0]);
+        this.props.playerInput([-1,0]);
         break;
       default:
         return
@@ -79,7 +79,7 @@ const mapStateToProps = ({ game }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    playerMove: (vector) => dispatch(playerMove(vector))
+    playerInput: (vector) => dispatch(playerInput(vector))
   }
 }
 
