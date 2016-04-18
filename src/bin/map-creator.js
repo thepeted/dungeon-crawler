@@ -107,7 +107,7 @@ export default () => {
   }
 
   //set starting player posiiton
-  world[STARTING_ROOM_POSITION[1] + 2][STARTING_ROOM_POSITION[0] + 2] = createPlayer();
+  world[STARTING_ROOM_POSITION[1]][STARTING_ROOM_POSITION[0]] = createPlayer();
 
   let enemies = [];
   for (let i = 0; i < 5; i++) {

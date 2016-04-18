@@ -12,18 +12,16 @@ let initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case PLAYER_MOVE:
-      let [ x, y ] = state.playerPosition;
-      let [ nextX, nextY ] = action.payload;
-      // if the move isn't valid don't move the player
-      // if (!state.entities[y + nextY][x + nextX]) return state;
-      // if the move is valid we can update the state
-      let newState = _.clone(state);
-      newState.entities[y + nextY][x + nextX] = state.entities[y][x]; //move existing player object
-      newState.entities[y][x] = { type: 'floor'}; //replace the old space with a floor tile
-      newState.playerPosition[1] = x + nextX;
-      newState.playerPosition[0] = y + nextY;
 
-      return newState;
+      let [ x, y ] = state.playerPosition.slice(0); //get current location
+      let [ vectorX, vectorY ] = action.payload; //get modifier
+      let newPosition = [vectorX + x, vectorY + y]; //define where we're moving to
+
+      let entities = _.cloneDeep(state.entities);
+      entities[newPosition[1]][newPosition[0]] = entities[y][x]; //move the player
+      entities[y][x] = { type: 'floor' } // replace current location with a floor tile
+
+      return Object.assign({}, state, {playerPosition: newPosition}, { entities })
     default:
       return state;
   }

@@ -18,10 +18,10 @@ class Game extends Component {
   }
 
   render() {
+
     //must be divisible by 2
     let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
     let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
-    console.log(this.props.game.playerPosition)
     let [playerX, playerY] = this.props.game.playerPosition;
 
     let top = _.clamp(playerY - viewportHeight / 2, 0, this.props.game.entities.length - viewportHeight);
