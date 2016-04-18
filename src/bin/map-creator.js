@@ -6,8 +6,9 @@ import { GRID_HEIGHT, GRID_WIDTH, ROOM_SIZE_RANGE, STARTING_ROOM_POSITION } from
 
 export default () => {
 
-  let createRandomRoom = (x = null ,y = null, sizeRange = ROOM_SIZE_RANGE, level = 1) => {
+  let createRandomRoom = (coords = STARTING_ROOM_POSITION, sizeRange = ROOM_SIZE_RANGE, level = 1) => {
     let [a,b] = sizeRange;
+    let [x,y] = coords;
     return {
       height: _.random(a,b),
       width: _.random(a,b),
@@ -99,14 +100,14 @@ export default () => {
   let seedRooms = [];
   let roomCounter = 0;
   let world = makeGrid(GRID_HEIGHT,GRID_WIDTH);
-  placeRoom(createRandomRoom(STARTING_ROOM_POSITION,STARTING_ROOM_POSITION));
+  placeRoom(createRandomRoom());
 
   while(roomCounter < 15  && seedRooms.length > 0){
     roomPlacer(seedRooms.pop());
   }
 
   //set starting player posiiton
-  world[STARTING_ROOM_POSITION + 2][STARTING_ROOM_POSITION + 2] = createPlayer();
+  world[STARTING_ROOM_POSITION[1] + 2][STARTING_ROOM_POSITION[0] + 2] = createPlayer();
 
   let enemies = [];
   for (let i = 0; i < 5; i++) {
