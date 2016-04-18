@@ -9,7 +9,6 @@ export const createEnemy = (level) => {
 
 export const createPlayer = () => {
   let player = {
-    health: 100,
     level: 1,
     type: 'player',
     weapon: {

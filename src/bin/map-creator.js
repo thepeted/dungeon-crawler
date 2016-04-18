@@ -107,21 +107,54 @@ export default () => {
   }
 
   //set starting player posiiton
-  world[STARTING_ROOM_POSITION[1]][STARTING_ROOM_POSITION[0]] = createPlayer();
+  let player = {
+    type: 'player',
+    health: 100
+  };
+
+
+  world[STARTING_ROOM_POSITION[1]][STARTING_ROOM_POSITION[0]] = player;
+
 
   let enemies = [];
   for (let i = 0; i < 5; i++) {
-    enemies.push(createEnemy());
+    enemies.push({
+      type: 'enemy',
+      health: 100
+    });
   }
 
-  while(enemies.length){
-    let x = [Math.floor(Math.random()*GRID_WIDTH)]
-    let y = [Math.floor(Math.random()*GRID_HEIGHT)]
-    if (world[y][x].type === 'floor') {
-      world[y][x] = enemies.pop();
+  let entityCollection = []
+
+  let potions = [];
+  for (let i = 0; i < 3; i++) {
+    potions.push({ type: 'potion' });
+  }
+
+  entityCollection.push(potions, enemies);
+
+  entityCollection.forEach(entities => {
+    while(entities.length){
+      let x = [Math.floor(Math.random()*GRID_WIDTH)]
+      let y = [Math.floor(Math.random()*GRID_HEIGHT)]
+      if (world[y][x].type === 'floor') {
+        world[y][x] = entities.pop();
+      }
     }
-  }
+  });
 
 
-return world
+let cleanedWorld = world.map(row => {
+  return row.map(cell => {
+    if (cell.type === 'door'){
+      return {type: 'floor'};
+    } else {
+      return cell;
+    }
+  })
+})
+
+
+
+return cleanedWorld;
 }
