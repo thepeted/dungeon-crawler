@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import createLevel from '../bin/map-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
-import * as types from '../constants/action-types'
+import { PLAYER_MOVE } from '../constants/action-types'
 
 
 let initialState = {
@@ -11,7 +11,7 @@ let initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case types.PLAYER_MOVE:
+    case PLAYER_MOVE:
       let { x, y } = state.playerPosition;
       let [ nextX, nextY ] = action.payload;
       //if the move isn't valid don't move the player

@@ -1,8 +1,8 @@
-import * as types from '../constants/action-types';
+import { PLAYER_MOVE } from '../constants/action-types';
 
 export function playerMove(vector) {
   return {
-    type: types.PLAYER_MOVE,
+    type: PLAYER_MOVE,
     payload: vector
   }
 }
