@@ -117,21 +117,37 @@ export default () => {
 
 
   let enemies = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 7; i++) {
     enemies.push({
       type: 'enemy',
       health: 100
     });
   }
 
-  let entityCollection = []
-
   let potions = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 5; i++) {
     potions.push({ type: 'potion' });
   }
 
-  entityCollection.push(potions, enemies);
+  let weapons = [
+    {
+      type: 'weapon',
+      name: 'Steel Sword',
+      damage: 15
+    },
+    {
+      type: 'weapon',
+      name: 'BattleAxe',
+      damage: 25
+    },
+    {
+      type: 'weapon',
+      name: 'BattleAxe',
+      damage: 30
+    }
+  ];
+
+  let entityCollection = [potions, enemies, weapons];
 
   entityCollection.forEach(entities => {
     while(entities.length){

@@ -31,7 +31,10 @@ class Game extends Component {
 
     return (
       <table>
-        <caption>Player Health: {this.props.game.playerHealth}</caption>
+        <caption>
+          Health: {this.props.game.playerHealth}
+          Weapon: {this.props.game.playerWeapon.name} {this.props.game.playerWeapon.damage}
+        </caption>
         <tbody>
         {
           this.props.game.entities.filter((row, i) => i >= top && i <= bottom)

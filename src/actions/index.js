@@ -1,4 +1,4 @@
-import { ADD_HEALTH, PLAYER_MOVE } from '../constants/action-types';
+import { ADD_HEALTH, PLAYER_MOVE, ADD_WEAPON } from '../constants/action-types';
 
 function playerMove(player, newCoords) {
   return {
@@ -13,6 +13,13 @@ function addHealth() {
   }
 }
 
+function addWeapon(weapon){
+  return {
+    type: ADD_WEAPON,
+    payload: { weapon }
+  }
+}
+
 //a thunk!
 export default (vector) => {
   return (dispatch, getState) => {
@@ -21,19 +28,23 @@ export default (vector) => {
     let [ vectorX, vectorY ] = vector; //get direction modifier
     let newPosition = [vectorX + x, vectorY + y]; //define where we're moving to
     let player = state.game.entities[y][x];
-    let destination = state.game.entities[y + vectorY][x + vectorX].type; //whats in the cell we're heading to
+    let destination = state.game.entities[y + vectorY][x + vectorX]; //whats in the cell we're heading to
 
-    switch(destination){
+    switch(destination.type){
       case 'floor':
-        dispatch(playerMove(player, newPosition));
+        dispatch(playerMove(player ,newPosition));
         break
       case 'potion':
         dispatch(addHealth());
-        dispatch(playerMove(player,newPosition));
+        dispatch(playerMove(player ,newPosition));
+        break
+      case 'weapon':
+        dispatch(addWeapon(destination));
+        dispatch(playerMove(player ,newPosition));
+        break
       default:
         return //do nothing
     }
   }
-
 
 }
