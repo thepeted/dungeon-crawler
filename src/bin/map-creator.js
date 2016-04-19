@@ -132,18 +132,18 @@ export default () => {
   let weapons = [
     {
       type: 'weapon',
-      name: 'Steel Sword',
+      name: 'Laser Pistol',
       damage: 15
     },
     {
       type: 'weapon',
-      name: 'BattleAxe',
-      damage: 25
+      name: 'Laser Rifle',
+      damage: 20
     },
     {
       type: 'weapon',
-      name: 'BattleAxe',
-      damage: 30
+      name: 'Plasma Pistol',
+      damage: 25
     }
   ];
 

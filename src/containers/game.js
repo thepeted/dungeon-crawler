@@ -30,27 +30,34 @@ class Game extends Component {
     let right = Math.max(playerX + viewportWidth / 2, viewportWidth);
 
     return (
-      <table>
-        <caption>
+      <div>
+        <div>
           Health: {this.props.game.playerHealth}
-          Weapon: {this.props.game.playerWeapon.name} {this.props.game.playerWeapon.damage}
-        </caption>
-        <tbody>
-        {
-          this.props.game.entities.filter((row, i) => i >= top && i <= bottom)
-            .map((row , i) => {
-              return (
-                <tr key={i}>{
-                  row.filter((cell, i) => i >= left && i <= right)
-                    .map((cell, j) => {
-                      return <td key={j} className={cell.type} />
-                    })
-                  }</tr>
-              )
-            })
-        }
-        </tbody>
-      </table>
+          Weapon: {this.props.game.playerWeapon.name}({this.props.game.playerWeapon.damage})
+          Player Level: {Math.floor(this.props.game.playerXP / 100)}
+          XP to LevelUp: {100 - this.props.game.playerXP % 100}
+        </div>
+        <table>
+          <caption>
+          </caption>
+          <tbody>
+          {
+            this.props.game.entities.filter((row, i) => i >= top && i <= bottom)
+              .map((row , i) => {
+                return (
+                  <tr key={i}>{
+                    row.filter((cell, i) => i >= left && i <= right)
+                      .map((cell, j) => {
+                        return <td key={j} className={cell.type} />
+                      })
+                    }</tr>
+                )
+              })
+          }
+          </tbody>
+        </table>
+      </div>
+
     )
   }
 
