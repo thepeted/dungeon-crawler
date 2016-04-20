@@ -112,7 +112,6 @@ export default (level = 1) => {
     health: 100
   };
 
-
   world[STARTING_ROOM_POSITION[1]][STARTING_ROOM_POSITION[0]] = player;
 
 
@@ -152,7 +151,14 @@ export default (level = 1) => {
     }
   ];
 
-  let entityCollection = [potions, enemies, weapons];
+  let exits = [];
+  if (level < 4){
+    exits.push({
+      type: 'exit'
+    })
+  }
+
+  let entityCollection = [potions, enemies, weapons, exits];
   entityCollection.forEach(entities => {
     while(entities.length){
       let x = [Math.floor(Math.random()*GRID_WIDTH)]
@@ -173,7 +179,6 @@ let cleanedWorld = world.map(row => {
     }
   })
 })
-
 
 
 return cleanedWorld;

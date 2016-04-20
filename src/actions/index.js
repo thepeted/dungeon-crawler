@@ -1,19 +1,14 @@
 import _ from 'lodash';
-import { MODIFY_HEALTH, PLAYER_MOVE, ADD_WEAPON, UPDATE_ENEMY, ADD_XP } from '../constants/action-types';
+import createMap from '../bin/map-creator'
+import { MODIFY_HEALTH, PLAYER_MOVE, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
+ADVANCE_DUNGEON, CREATE_LEVEL } from '../constants/action-types';
 //todo - should rename destination variable
 
 
-function playerMove(player, newCoords) {
+function addWeapon(weapon){
   return {
-    type: PLAYER_MOVE,
-    payload: { player, newCoords }
-  }
-}
-
-function modifyHealth(amount) {
-  return {
-    type: MODIFY_HEALTH,
-    payload: amount
+    type: ADD_WEAPON,
+    payload: weapon
   }
 }
 
@@ -24,10 +19,30 @@ function addXP(amount){
   }
 }
 
-function addWeapon(weapon){
+function createLevel(level){
   return {
-    type: ADD_WEAPON,
-    payload: weapon
+    type: CREATE_LEVEL,
+    payload: createMap(level)
+  }
+}
+
+function modifyHealth(amount) {
+  return {
+    type: MODIFY_HEALTH,
+    payload: amount
+  }
+}
+
+function advanceDungeonLevel() {
+  return {
+    type: ADVANCE_DUNGEON
+  }
+}
+
+function playerMove(player, newCoords) {
+  return {
+    type: PLAYER_MOVE,
+    payload: { player, newCoords }
   }
 }
 
@@ -37,6 +52,7 @@ function updateEnemy(entity, newCoords) {
     payload: { entity, newCoords }
   }
 }
+
 
 //a thunk!
 export default (vector) => {
@@ -72,6 +88,10 @@ export default (vector) => {
           dispatch(playerMove(player, newPosition));
           break
         }
+      case 'exit':
+        dispatch(createLevel(state.game.dungeonLevel + 1))
+        dispatch(advanceDungeonLevel());
+        break
       case 'floor':
         dispatch(playerMove(player, newPosition));
         break

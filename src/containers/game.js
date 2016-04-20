@@ -23,6 +23,7 @@ class Game extends Component {
     let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
     let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
     let [playerX, playerY] = this.props.game.playerPosition;
+    console.log('render', this.props.game.playerPosition)
 
     let top = _.clamp(playerY - viewportHeight / 2, 0, this.props.game.entities.length - viewportHeight);
     let bottom = Math.max(playerY + viewportHeight / 2, viewportHeight);

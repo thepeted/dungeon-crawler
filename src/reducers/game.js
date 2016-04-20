@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import createLevel from '../bin/map-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
-import { PLAYER_MOVE, MODIFY_HEALTH, ADD_WEAPON, UPDATE_ENEMY, ADD_XP } from '../constants/action-types'
+import { PLAYER_MOVE, MODIFY_HEALTH, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
+ADVANCE_DUNGEON, CREATE_LEVEL } from '../constants/action-types'
 
 
 let initialState = {
@@ -23,6 +24,11 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {playerWeapon: action.payload});
     case ADD_XP:
       return Object.assign({}, state, {playerXP: state.playerXP + action.payload});
+    case ADVANCE_DUNGEON:
+      return Object.assign({}, state, {dungeonLevel: state.dungeonLevel + 1});
+    case CREATE_LEVEL:
+      console.log(STARTING_ROOM_POSITION)
+      return Object.assign({}, state, {playerPosition: STARTING_ROOM_POSITION}, {entities: action.payload});
     case MODIFY_HEALTH:
       return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
     case PLAYER_MOVE:
