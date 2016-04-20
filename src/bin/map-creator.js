@@ -4,9 +4,9 @@ import makeGrid from './grid';
 
 import { GRID_HEIGHT, GRID_WIDTH, ROOM_SIZE_RANGE, STARTING_ROOM_POSITION } from '../constants/settings';
 
-export default () => {
+export default (level = 1) => {
 
-  let createRandomRoom = (coords = STARTING_ROOM_POSITION, sizeRange = ROOM_SIZE_RANGE, level = 1) => {
+  let createRandomRoom = (coords = STARTING_ROOM_POSITION, sizeRange = ROOM_SIZE_RANGE, level) => {
     let [a,b] = sizeRange;
     let [x,y] = coords;
     return {
@@ -120,9 +120,14 @@ export default () => {
   for (let i = 0; i < 7; i++) {
     enemies.push({
       type: 'enemy',
-      health: 100
+      health: 100,
+      //half of the enememies will be a level higher or lower (except on
+      //level 1, where ~1/4 enemies level higher)
+      level: _.random(level, _.random(level - 1 ? level -1 : level, level + 1))
     });
   }
+
+
 
   let potions = [];
   for (let i = 0; i < 5; i++) {
@@ -148,7 +153,6 @@ export default () => {
   ];
 
   let entityCollection = [potions, enemies, weapons];
-
   entityCollection.forEach(entities => {
     while(entities.length){
       let x = [Math.floor(Math.random()*GRID_WIDTH)]

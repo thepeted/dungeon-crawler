@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case ADD_WEAPON:
       return Object.assign({}, state, {playerWeapon: action.payload});
     case ADD_XP:
-      return Object.assign({}, state, {playerXP: state.playerXP + 20});
+      return Object.assign({}, state, {playerXP: state.playerXP + action.payload});
     case MODIFY_HEALTH:
       return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
     case PLAYER_MOVE:

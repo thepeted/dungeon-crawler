@@ -17,9 +17,10 @@ function modifyHealth(amount) {
   }
 }
 
-function addXP(){
+function addXP(amount){
   return {
-    type: ADD_XP
+    type: ADD_XP,
+    payload: amount
   }
 }
 
@@ -56,8 +57,9 @@ export default (vector) => {
         console.log(`playerlevel:${playerLevel} Damage Dealt:${Math.floor(
         state.game.playerWeapon.damage * _.random(1,1.3) * playerLevel
       )}`);
+        console.log(destination.level);
         let damageTaken = 0 - Math.floor(
-          (_.random(5,7) * state.game.dungeonLevel)
+          (_.random(5,7) * destination.level)
         );
         if (destination.health > 0) {
           dispatch(updateEnemy(destination, newPosition));
@@ -66,7 +68,7 @@ export default (vector) => {
         }
         if (destination.health <= 0){
           dispatch(modifyHealth(damageTaken));
-          dispatch(addXP());
+          dispatch(addXP(20 * destination.level));
           dispatch(playerMove(player, newPosition));
           break
         }
