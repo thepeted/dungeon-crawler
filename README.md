@@ -4,7 +4,7 @@ An exercise as part of the [FreeCodeCamp](http://freecodecamp.com) curriculum.
 
 Work in progress...
 
-User Stories:
+User Stories TODO:
 - ~~User Story: I have health, a level, and a weapon. I can pick up a better weapon. I can pick up health items~~.
 
 - ~~User Story: All the items and enemies on the map are arranged at random.~~
@@ -17,7 +17,7 @@ User Stories:
 
 - ~~User Story: When I beat an enemy, the enemy goes away and I get XP, which eventually increases my level.~~
 
-- User Story: When I fight an enemy, we take turns damaging each other until one of us loses. I do damage based off of my level and my weapon. The enemy does damage based off of its level. Damage is somewhat random within a range.
+- ~~User Story: When I fight an enemy, we take turns damaging each other until one of us loses. I do damage based off of my level and my weapon. The enemy does damage based off of its level. Damage is somewhat random within a range.~~
 
 - User Story: When I find and beat the boss, I win.
 

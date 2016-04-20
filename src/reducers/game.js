@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
     case ADVANCE_DUNGEON:
       return Object.assign({}, state, {dungeonLevel: state.dungeonLevel + 1});
     case CREATE_LEVEL:
-      console.log(STARTING_ROOM_POSITION)
       return Object.assign({}, state, {playerPosition: STARTING_ROOM_POSITION}, {entities: action.payload});
     case MODIFY_HEALTH:
       return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});

@@ -126,30 +126,58 @@ export default (level = 1) => {
     });
   }
 
-
-
   let potions = [];
   for (let i = 0; i < 5; i++) {
     potions.push({ type: 'potion' });
   }
 
-  let weapons = [
+  let weaponTypes = [
     {
-      type: 'weapon',
       name: 'Laser Pistol',
       damage: 15
     },
     {
-      type: 'weapon',
       name: 'Laser Rifle',
-      damage: 20
+      damage: 23
     },
     {
-      type: 'weapon',
       name: 'Plasma Pistol',
-      damage: 25
+      damage: 26
+    },
+    {
+      name: 'Plasma Rifle',
+      damage: 30
+    },
+    {
+      name: 'Electric ChainSaw',
+      damage: 33
+    },
+    {
+      name: 'Railgun',
+      damage: 37
+    },
+    {
+      name: 'Dark Energy Cannon',
+      damage: 40
+    },
+    {
+      name: 'B.F.G',
+      damage: 49
     }
   ];
+
+  let weapons = [];
+  let qualifying = weaponTypes
+    .filter(weapon => weapon.damage < level * 10 + 20 )
+      .filter(weapon => weapon.damage > level * 10 - 10)
+
+  for (let i =0; i < 3; i++) {
+    let randomNum = _.random(0,qualifying.length-1);
+    let weapon = qualifying[randomNum]
+    weapon.type = 'weapon';
+    weapons.push(weapon);
+  }
+  console.log(weapons);
 
   let exits = [];
   if (level < 4){
