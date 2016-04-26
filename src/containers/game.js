@@ -2,7 +2,9 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import playerInput from '../actions/'
+import playerInput from '../actions/';
+import Cell from './cell';
+import Controls from './controls';
 
 
 import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../constants/settings';
@@ -10,7 +12,7 @@ import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../constants/settings';
 class Game extends Component {
   constructor(){
     super();
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeyPress = _.throttle(this.handleKeyPress.bind(this),150);
   }
 
   componentDidMount(){
@@ -29,33 +31,33 @@ class Game extends Component {
     let left = _.clamp(playerX - viewportWidth / 2, 0, this.props.game.entities[0].length - viewportWidth);
     let right = Math.max(playerX + viewportWidth / 2, viewportWidth);
 
+    let newEntities = this.props.game.entities.map((row, i) => row.map((cell, j) => {
+      cell.distanceFromPlayer = (Math.abs(playerY - i)) + (Math.abs(playerX - j));
+      return cell;
+    }))
+
     return (
-      <div>
+      <div className="grid-wrapper clearfix">
         <div>
           Health: {this.props.game.playerHealth}
           Weapon: {this.props.game.playerWeapon.name}({this.props.game.playerWeapon.damage})
           Player Level: {Math.floor(this.props.game.playerXP / 100)}
           XP to LevelUp: {100 - this.props.game.playerXP % 100}
+          <Controls />
         </div>
-        <table>
-          <caption>
-          </caption>
-          <tbody>
           {
-            this.props.game.entities.filter((row, i) => i >= top && i <= bottom)
+            newEntities.filter((row, i) => i >= top && i <= bottom)
               .map((row , i) => {
                 return (
-                  <tr key={i}>{
+                  <div key={i} className="row clearfix"> {
                     row.filter((cell, i) => i >= left && i <= right)
                       .map((cell, j) => {
-                        return <td key={j} className={cell.type} />
+                        return <Cell key={j} cell={cell} distance={cell.distanceFromPlayer} />
                       })
-                    }</tr>
+                    }</div>
                 )
               })
           }
-          </tbody>
-        </table>
       </div>
 
     )

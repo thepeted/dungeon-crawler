@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import createMap from '../bin/map-creator'
-import { MODIFY_HEALTH, PLAYER_MOVE, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
+import { FOG_MODE, MODIFY_HEALTH, PLAYER_MOVE, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
 ADVANCE_DUNGEON, CREATE_LEVEL } from '../constants/action-types';
 //todo - should rename destination variable
 
@@ -43,6 +43,12 @@ function playerMove(player, newCoords) {
   return {
     type: PLAYER_MOVE,
     payload: { player, newCoords }
+  }
+}
+
+export function toggleFogMode() {
+  return {
+    type: FOG_MODE
   }
 }
 
@@ -100,6 +106,7 @@ export default (vector) => {
         dispatch(playerMove(player ,newPosition));
         break
       case 'weapon':
+      console.log(destination)
         dispatch(addWeapon(destination));
         dispatch(playerMove(player ,newPosition));
         break

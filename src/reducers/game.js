@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import createLevel from '../bin/map-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
-import { PLAYER_MOVE, MODIFY_HEALTH, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
+import { FOG_MODE, PLAYER_MOVE, MODIFY_HEALTH, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
 ADVANCE_DUNGEON, CREATE_LEVEL } from '../constants/action-types'
 
 
 let initialState = {
   entities: createLevel(),
   dungeonLevel: 1,
+  fogMode: true,
   playerHealth: 100,
   playerPosition: STARTING_ROOM_POSITION,
   playerXP: 100,
@@ -28,6 +29,9 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {dungeonLevel: state.dungeonLevel + 1});
     case CREATE_LEVEL:
       return Object.assign({}, state, {playerPosition: STARTING_ROOM_POSITION}, {entities: action.payload});
+    case FOG_MODE:
+      console.log("fogMode");
+      return Object.assign({}, state, {fogMode: !state.fogMode})
     case MODIFY_HEALTH:
       return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
     case PLAYER_MOVE:

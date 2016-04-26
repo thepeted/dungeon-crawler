@@ -173,11 +173,10 @@ export default (level = 1) => {
 
   for (let i =0; i < 3; i++) {
     let randomNum = _.random(0,qualifying.length-1);
-    let weapon = qualifying[randomNum]
+    let weapon = _.clone(qualifying[randomNum]);
     weapon.type = 'weapon';
     weapons.push(weapon);
   }
-  console.log(weapons);
 
   let exits = [];
   if (level < 4){
@@ -200,6 +199,12 @@ export default (level = 1) => {
 
 let cleanedWorld = world.map(row => {
   return row.map(cell => {
+    if (cell === 0) {
+      return {
+        type: 0,
+        opacity: _.random(0.3,0.8)
+      }
+    }
     if (cell.type === 'door'){
       return {type: 'floor'};
     } else {
@@ -207,7 +212,6 @@ let cleanedWorld = world.map(row => {
     }
   })
 })
-
 
 return cleanedWorld;
 }
