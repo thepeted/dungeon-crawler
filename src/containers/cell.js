@@ -28,8 +28,8 @@ class Cell extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-  return { fogMode: state.game.fogMode}
+const mapStateToProps = ({fogMode}) => {
+  return { fogMode }
 }
 
 export default connect(mapStateToProps)(Cell)

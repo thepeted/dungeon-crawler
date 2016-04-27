@@ -20,7 +20,7 @@ class Game extends Component {
   }
 
   render() {
-
+    console.log(this.props)
     //must be divisible by 2
     let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
     let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
@@ -85,8 +85,8 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = ({ game }) => {
-  return { game };
+const mapStateToProps = (state) => {
+  return { game: state };
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -64,20 +64,20 @@ function updateEnemy(entity, newCoords) {
 export default (vector) => {
   return (dispatch, getState) => {
     const state = getState();
-    let [ x, y ] = state.game.playerPosition.slice(0); //get current location
+    let [ x, y ] = state.playerPosition.slice(0); //get current location
     let [ vectorX, vectorY ] = vector; //get direction modifier
     let newPosition = [vectorX + x, vectorY + y]; //define where we're moving to
-    let player = _.clone(state.game.entities[y][x]);
-    let destination = _.clone(state.game.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
+    let player = _.clone(state.entities[y][x]);
+    let destination = _.clone(state.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
 
     switch(destination.type){
       case 'enemy':
-        let playerLevel = Math.floor(state.game.playerXP / 100);
+        let playerLevel = Math.floor(state.playerXP / 100);
         destination.health-= Math.floor(
-        state.game.playerWeapon.damage * _.random(1,1.3) * playerLevel
+        state.playerWeapon.damage * _.random(1,1.3) * playerLevel
         );
         console.log(`playerlevel:${playerLevel} Damage Dealt:${Math.floor(
-        state.game.playerWeapon.damage * _.random(1,1.3) * playerLevel
+        state.playerWeapon.damage * _.random(1,1.3) * playerLevel
       )}`);
         console.log(destination.level);
         let damageTaken = 0 - Math.floor(
@@ -95,7 +95,7 @@ export default (vector) => {
           break
         }
       case 'exit':
-        dispatch(createLevel(state.game.dungeonLevel + 1))
+        dispatch(createLevel(state.dungeonLevel + 1))
         dispatch(advanceDungeonLevel());
         break
       case 'floor':

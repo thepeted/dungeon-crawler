@@ -7,13 +7,13 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-import reducers from './reducers';
+import reducer from './reducers/game';
 
 import createLevel from './bin/map-creator';
 import App from './components/app';
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={createStoreWithMiddleware(reducer)}>
     <App />
   </Provider>
   , document.querySelector('.container'));
