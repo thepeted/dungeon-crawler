@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import update from 'react-addons-update';
+
 import createLevel from '../bin/map-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
 import { FOG_MODE, PLAYER_MOVE, MODIFY_HEALTH, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
@@ -35,17 +36,27 @@ export default (state = initialState, action) => {
     case MODIFY_HEALTH:
       return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
     case PLAYER_MOVE:
-      let entities = _.cloneDeep(state.entities);
-      let [ x, y ] = state.playerPosition.slice(0); //cache current location
+      let [ playerX, playerY ] = state.playerPosition.slice(0); //cache current location
       let [ destX, destY ] = action.payload.newCoords; //cache destination
-      entities[destY][destX] = action.payload.player; //move the player to dest
-      entities[y][x] = { type: 'floor' } // replace current location with a floor tile
-      return Object.assign({}, state, {playerPosition: [ destX, destY ]}, { entities });
+      let entitiesWithUpdatedFloor =  update(state.entities, {
+        [playerY]: {
+          [playerX]: {$set: {type: 'floor' }}
+        }
+      })
+      let entitiesWithUpdatedPlayer = update(entitiesWithUpdatedFloor, {
+        [destY]: {
+          [destX]: {$set: action.payload.player}
+        }
+      })
+      return Object.assign({}, state, {playerPosition: [ destX, destY ]}, { entities: entitiesWithUpdatedPlayer });
     case UPDATE_ENEMY:
-      let entities1 = _.cloneDeep(state.entities);
       let [ enemyX, enemyY ] = action.payload.newCoords; //cache destination
-      entities1[enemyX][enemyY] = action.payload.entity;
-      return Object.assign({},state, { entities1 });
+      let entitiesWithUpdatedEnemy = update(state.entities, {
+        [enemyY]: {
+          [enemyX]: {$set: action.payload.entity}
+        }
+      })
+      return Object.assign({},state, { entities: entitiesWithUpdatedEnemy });
     default:
       return state;
   }
