@@ -1,64 +1,60 @@
 import _ from 'lodash';
 import createMap from '../bin/map-creator'
-import { FOG_MODE, MODIFY_HEALTH, PLAYER_MOVE, ADD_WEAPON, UPDATE_ENEMY, ADD_XP,
-ADVANCE_DUNGEON, CREATE_LEVEL } from '../constants/action-types';
-//todo - should rename destination variable
+import * as t from '../constants/action-types';
 
-
-function addWeapon(weapon){
+function addWeapon(payload){
   return {
-    type: ADD_WEAPON,
-    payload: weapon
+    type: t.ADD_WEAPON,
+    payload
   }
 }
 
-function addXP(amount){
+function addXP(payload){
   return {
-    type: ADD_XP,
-    payload: amount
-  }
-}
-
-function createLevel(level){
-  return {
-    type: CREATE_LEVEL,
-    payload: createMap(level)
-  }
-}
-
-function modifyHealth(amount) {
-  return {
-    type: MODIFY_HEALTH,
-    payload: amount
+    type: t.ADD_XP,
+    payload
   }
 }
 
 function advanceDungeonLevel() {
   return {
-    type: ADVANCE_DUNGEON
+    type: t.ADVANCE_DUNGEON
   }
 }
 
-function playerMove(player, newCoords) {
+function changeEntity(entity, coords){
   return {
-    type: PLAYER_MOVE,
-    payload: { player, newCoords }
+    type: t.CHANGE_ENTITY,
+    payload: {entity, coords}
+  }
+}
+
+function changePlayerPosition(payload){
+  return {
+    type: t.CHANGE_PLAYER_POSITION,
+    payload
+  }
+}
+
+function createLevel(level){
+  return {
+    type: t.CREATE_LEVEL,
+    payload: createMap(level)
+  }
+}
+
+function modifyHealth(payload) {
+  return {
+    type: t.MODIFY_HEALTH,
+    payload
   }
 }
 
 export function toggleFogMode() {
   return {
-    type: FOG_MODE
+    type: t.TOGGLE_FOG_MODE
   }
 }
-
-function updateEnemy(entity, newCoords) {
-  return {
-    type: UPDATE_ENEMY,
-    payload: { entity, newCoords }
-  }
-}
-
 
 //a thunk!
 export default (vector) => {
@@ -70,49 +66,48 @@ export default (vector) => {
     let player = _.clone(state.entities[y][x]);
     let destination = _.clone(state.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
 
+    //move the player unless destination is an enemy or a '0' cell
+    if (destination.type && destination.type !== 'enemy') {
+      dispatch(changeEntity({ type: 'floor'}, [x,y] ))
+      dispatch(changeEntity(player, newPosition));
+      dispatch(changePlayerPosition(newPosition))
+    }
+
     switch(destination.type){
       case 'enemy':
         let playerLevel = Math.floor(state.playerXP / 100);
-        destination.health-= Math.floor(
-        state.playerWeapon.damage * _.random(1,1.3) * playerLevel
-        );
-        console.log(`playerlevel:${playerLevel} Damage Dealt:${Math.floor(
-        state.playerWeapon.damage * _.random(1,1.3) * playerLevel
-      )}`);
-        console.log(destination.level);
-        let damageTaken = 0 - Math.floor(
-          (_.random(5,7) * destination.level)
-        );
+
+        //player attacks enemy
+        destination.health-= Math.floor(state.playerWeapon.damage * _.random(1,1.3) * playerLevel);
+
         if (destination.health > 0) {
-          dispatch(updateEnemy(destination, newPosition));
+          //enemy attacks player
+          let damageTaken = 0 - Math.floor(_.random(5,7) * destination.level);
+          dispatch(changeEntity(destination , newPosition));
           dispatch(modifyHealth(damageTaken));
           break
         }
         if (destination.health <= 0){
-          dispatch(modifyHealth(damageTaken));
+          //the fight is over and the player has won
+          //add XP and move the player
           dispatch(addXP(20 * destination.level));
-          dispatch(playerMove(player, newPosition));
+          dispatch(changeEntity({ type: 'floor'}, [x,y] ))
+          dispatch(changeEntity(player ,newPosition));
+          dispatch(changePlayerPosition(newPosition))
           break
         }
       case 'exit':
         dispatch(createLevel(state.dungeonLevel + 1))
         dispatch(advanceDungeonLevel());
         break
-      case 'floor':
-        dispatch(playerMove(player, newPosition));
-        break
       case 'potion':
         dispatch(modifyHealth(20));
-        dispatch(playerMove(player ,newPosition));
         break
       case 'weapon':
-      console.log(destination)
         dispatch(addWeapon(destination));
-        dispatch(playerMove(player ,newPosition));
         break
       default:
         return //do nothing
     }
   }
-
 }

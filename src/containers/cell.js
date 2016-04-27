@@ -9,9 +9,6 @@ class Cell extends Component {
       opacityValue = this.props.cell.opacity
     }
     if (this.props.fogMode && this.props.distance > 10){
-      if (this.props.cell.type === 'weapon'){
-        console.log('weapon bug', this.props.cell)
-      }
       opacityValue = 0
     }
 

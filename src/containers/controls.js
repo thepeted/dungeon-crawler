@@ -16,7 +16,6 @@ class Controls extends Component {
     )
   }
   handleClick(){
-    console.log(this.props)
     this.props.toggleFogMode()
   }
 }

@@ -1,8 +1,8 @@
-export const MODIFY_HEALTH = 'MODIFY_HEALTH';
 export const ADD_WEAPON = 'ADD_WEAPON';
 export const ADD_XP = 'ADD_XP';
-export const CREATE_LEVEL = 'CREATE_LEVEL';
-export const FOG_MODE = 'FOG_MODE'
 export const ADVANCE_DUNGEON = 'ADVANCE_DUNGEON';
-export const PLAYER_MOVE = 'PLAYER_MOVE';
-export const UPDATE_ENEMY = 'UPDATE_ENEMY';
+export const CHANGE_ENTITY = 'CHANGE_ENTITY';
+export const CHANGE_PLAYER_POSITION = 'CHANGE_PLAYER_POSITION'
+export const CREATE_LEVEL = 'CREATE_LEVEL';
+export const TOGGLE_FOG_MODE = 'TOGGLE_FOG_MODE'
+export const MODIFY_HEALTH = 'MODIFY_HEALTH';

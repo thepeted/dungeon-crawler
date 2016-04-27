@@ -20,7 +20,6 @@ class Game extends Component {
   }
 
   render() {
-    console.log(this.props)
     //must be divisible by 2
     let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
     let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
