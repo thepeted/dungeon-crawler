@@ -67,8 +67,8 @@ export default (vector) => {
     let [ x, y ] = state.game.playerPosition.slice(0); //get current location
     let [ vectorX, vectorY ] = vector; //get direction modifier
     let newPosition = [vectorX + x, vectorY + y]; //define where we're moving to
-    let player = state.game.entities[y][x];
-    let destination = state.game.entities[y + vectorY][x + vectorX]; //whats in the cell we're heading to
+    let player = _.clone(state.game.entities[y][x]);
+    let destination = _.clone(state.game.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
 
     switch(destination.type){
       case 'enemy':
