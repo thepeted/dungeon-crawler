@@ -4,11 +4,7 @@ import populateEntities from '../bin/entity-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
 import * as t from '../constants/action-types';
 
-let initialState = {
-  entities: populateEntities(createLevel()),
-  dungeonLevel: 1,
-  playerPosition: STARTING_ROOM_POSITION
-}
+let initialState = populateEntities(createLevel());
 
 export default (state = initialState, action) => {
   switch(action.type) {
@@ -25,7 +21,7 @@ export default (state = initialState, action) => {
     case t.CHANGE_PLAYER_POSITION:
       return Object.assign({}, state, {playerPosition: action.payload})
     case t.CREATE_LEVEL:
-      return Object.assign({}, state, {playerPosition: STARTING_ROOM_POSITION}, {entities: action.payload});
+      return Object.assign({}, state, {playerPosition: action.payload.playerPosition}, {entities: action.payload.entities});
     default:
       return state;
   }

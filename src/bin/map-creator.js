@@ -107,8 +107,6 @@ export default () => {
     roomPlacer(seedRooms.pop());
   }
 
-  console.log('world', world)
-
   //add random opacity to the background cells and replace doors with floors
   let cleanedWorld = world.map(row => {
   return row.map(cell => {

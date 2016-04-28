@@ -20,9 +20,6 @@ class grid extends Component {
   }
 
   render() {
-
-    console.log('I rendered')
-
     //must be divisible by 2
     let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
     let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
@@ -45,6 +42,7 @@ class grid extends Component {
           Weapon: {this.props.player.playerWeapon.name}({this.props.player.playerWeapon.damage})
           Player Level: {Math.floor(this.props.player.playerXP / 100)}
           XP to LevelUp: {100 - this.props.player.playerXP % 100}
+          Dungeon Level: {this.props.grid.dungeonLevel}
           <Controls />
         </div>
           {

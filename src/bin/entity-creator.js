@@ -3,12 +3,6 @@ import * as c from '../constants/settings';
 
 export default (world, level = 1) => {
   //set starting player posiiton
-  const player = {
-    type: 'player',
-    health: 100
-  };
-  world[c.STARTING_ROOM_POSITION[1]][c.STARTING_ROOM_POSITION[0]] = player;
-
 
   let enemies = [];
   for (let i = 0; i < 7; i++) {
@@ -80,16 +74,37 @@ export default (world, level = 1) => {
     })
   }
 
-  let entityCollection = [potions, enemies, weapons, exits];
+  let players = [
+    {
+      type: 'player'
+    }
+  ];
+
+  let playerStartingPosition = [];
+
+  let entityCollection = [potions, enemies, weapons, exits, players];
   entityCollection.forEach(entities => {
     while(entities.length){
-      let x = [Math.floor(Math.random()*c.GRID_WIDTH)]
-      let y = [Math.floor(Math.random()*c.GRID_HEIGHT)]
+      let x = Math.floor(Math.random()*c.GRID_WIDTH)
+      let y = Math.floor(Math.random()*c.GRID_HEIGHT)
       if (world[y][x].type === 'floor') {
+        if (entities[0].type === 'player') {
+
+          playerStartingPosition = [x,y]
+        }
         world[y][x] = entities.pop();
       }
     }
   });
 
-return world;
+  const availableFloorCells = []
+  world.map((row, i) => {
+    return row.forEach((cell, j) => {
+      if (cell.type === "floor") {
+        availableFloorCells.push({x: j, y: i})
+      }
+    })
+  })
+
+return {entities: world, playerPosition: _.clone(playerStartingPosition), dungeonLevel: level};
 }
