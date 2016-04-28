@@ -12,7 +12,7 @@ import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../constants/settings';
 class grid extends Component {
   constructor(){
     super();
-    this.handleKeyPress = _.throttle(this.handleKeyPress.bind(this),150);
+    this.handleKeyPress = _.throttle(this.handleKeyPress.bind(this),100);
   }
 
   componentDidMount(){

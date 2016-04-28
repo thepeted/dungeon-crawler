@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {batchActions} from 'redux-batched-actions';
 import createMap from '../bin/map-creator'
 import * as t from '../constants/action-types';
 
@@ -68,9 +69,11 @@ export default (vector) => {
 
     //move the player unless destination is an enemy or a '0' cell
     if (destination.type && destination.type !== 'enemy') {
-      dispatch(changeEntity({ type: 'floor'}, [x,y] ))
-      dispatch(changeEntity(player, newPosition));
-      dispatch(changePlayerPosition(newPosition))
+      dispatch(batchActions([
+        changeEntity({ type: 'floor'}, [x,y] ),
+        changeEntity(player, newPosition),
+        changePlayerPosition(newPosition)
+      ]));
     }
 
     switch(destination.type){
@@ -85,17 +88,18 @@ export default (vector) => {
           let damageTaken = 0 - Math.floor(_.random(5,7) * destination.level);
           dispatch(changeEntity(destination , newPosition));
           dispatch(modifyHealth(damageTaken));
-          break
         }
         if (destination.health <= 0){
           //the fight is over and the player has won
           //add XP and move the player
-          dispatch(addXP(20 * destination.level));
-          dispatch(changeEntity({ type: 'floor'}, [x,y] ))
-          dispatch(changeEntity(player ,newPosition));
-          dispatch(changePlayerPosition(newPosition))
-          break
+          dispatch(batchActions([
+            addXP(20 * destination.level),
+            changeEntity({ type: 'floor'}, [x,y] ),
+            changeEntity(player, newPosition),
+            changePlayerPosition(newPosition)
+          ]));
         }
+        break
       case 'exit':
         dispatch(createLevel(state.grid.dungeonLevel + 1))
         dispatch(advanceDungeonLevel());
