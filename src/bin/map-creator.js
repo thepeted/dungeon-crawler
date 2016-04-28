@@ -2,13 +2,13 @@ import _ from 'lodash';
 import { createPlayer, createEnemy } from './entity-creator';
 import makeGrid from './grid';
 
-import { GRID_HEIGHT, GRID_WIDTH, ROOM_SIZE_RANGE, STARTING_ROOM_POSITION } from '../constants/settings';
+import * as c from '../constants/settings';
 
-export default (level = 1) => {
+export default () => {
 
-  let createRandomRoom = (coords = STARTING_ROOM_POSITION, sizeRange = ROOM_SIZE_RANGE, level) => {
-    let [a,b] = sizeRange;
-    let [x,y] = coords;
+  const createRandomRoom = (coords = c.STARTING_ROOM_POSITION, sizeRange = c.ROOM_SIZE_RANGE) => {
+    const [a,b] = sizeRange;
+    const [x,y] = coords;
     return {
       height: _.random(a,b),
       width: _.random(a,b),
@@ -17,7 +17,7 @@ export default (level = 1) => {
     }
   }
 
-  let placeRoom = (room) => {
+  const placeRoom = (room) => {
     //this function puts a new room in to the world, checks if the world is
     //still valid and then replaces the old world with the new one if it is
 
@@ -97,107 +97,20 @@ export default (level = 1) => {
     placeRoom(room);
   }
 
-  let seedRooms = [];
-  let roomCounter = 0;
-  let world = makeGrid(GRID_HEIGHT,GRID_WIDTH);
-  placeRoom(createRandomRoom());
-
+  //here begins the process of building out the map
+  let seedRooms = []; //seed rooms will be populated by placeRoom function
+  let roomCounter = 0; //room counter will be advanced by placeRoom function
+  let world = makeGrid(c.GRID_HEIGHT,c.GRID_WIDTH);
+  placeRoom(createRandomRoom()); // we need one room to start from
+  // keep trying to place the rooms until we run out of rooms or hit our limit
   while(roomCounter < 15  && seedRooms.length > 0){
     roomPlacer(seedRooms.pop());
   }
 
-  //set starting player posiiton
-  let player = {
-    type: 'player',
-    health: 100
-  };
+  console.log('world', world)
 
-  world[STARTING_ROOM_POSITION[1]][STARTING_ROOM_POSITION[0]] = player;
-
-
-  let enemies = [];
-  for (let i = 0; i < 7; i++) {
-    enemies.push({
-      type: 'enemy',
-      health: 100,
-      //half of the enememies will be a level higher or lower (except on
-      //level 1, where ~1/4 enemies level higher)
-      level: _.random(level, _.random(level - 1 ? level -1 : level, level + 1))
-    });
-  }
-
-  let potions = [];
-  for (let i = 0; i < 5; i++) {
-    potions.push({ type: 'potion' });
-  }
-
-  let weaponTypes = [
-    {
-      name: 'Laser Pistol',
-      damage: 15
-    },
-    {
-      name: 'Laser Rifle',
-      damage: 23
-    },
-    {
-      name: 'Plasma Pistol',
-      damage: 26
-    },
-    {
-      name: 'Plasma Rifle',
-      damage: 30
-    },
-    {
-      name: 'Electric ChainSaw',
-      damage: 33
-    },
-    {
-      name: 'Railgun',
-      damage: 37
-    },
-    {
-      name: 'Dark Energy Cannon',
-      damage: 40
-    },
-    {
-      name: 'B.F.G',
-      damage: 49
-    }
-  ];
-
-  let weapons = [];
-  let qualifying = weaponTypes
-    .filter(weapon => weapon.damage < level * 10 + 20 )
-      .filter(weapon => weapon.damage > level * 10 - 10)
-
-  for (let i =0; i < 3; i++) {
-    let randomNum = _.random(0,qualifying.length-1);
-    let weapon = _.clone(qualifying[randomNum]);
-    weapon.type = 'weapon';
-    weapons.push(weapon);
-  }
-
-  let exits = [];
-  if (level < 4){
-    exits.push({
-      type: 'exit'
-    })
-  }
-
-  let entityCollection = [potions, enemies, weapons, exits];
-  entityCollection.forEach(entities => {
-    while(entities.length){
-      let x = [Math.floor(Math.random()*GRID_WIDTH)]
-      let y = [Math.floor(Math.random()*GRID_HEIGHT)]
-      if (world[y][x].type === 'floor') {
-        world[y][x] = entities.pop();
-      }
-    }
-  });
-
-
-let cleanedWorld = world.map(row => {
+  //add random opacity to the background cells and replace doors with floors
+  let cleanedWorld = world.map(row => {
   return row.map(cell => {
     if (cell === 0) {
       return {

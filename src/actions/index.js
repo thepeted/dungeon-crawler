@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {batchActions} from 'redux-batched-actions';
-import createMap from '../bin/map-creator'
+import createMap from '../bin/map-creator';
+import populateEntities from '../bin/entity-creator';
 import * as t from '../constants/action-types';
 
 function addWeapon(payload){
@@ -40,7 +41,7 @@ function changePlayerPosition(payload){
 function createLevel(level){
   return {
     type: t.CREATE_LEVEL,
-    payload: createMap(level)
+    payload: populateEntities(createMap(),level)
   }
 }
 

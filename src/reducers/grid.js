@@ -1,12 +1,11 @@
 import update from 'react-addons-update';
-
 import createLevel from '../bin/map-creator';
+import populateEntities from '../bin/entity-creator';
 import { STARTING_ROOM_POSITION } from '../constants/settings';
-//import { ADD_WEAPON, ADD_XP, ADVANCE_DUNGEON, FOG_MODE, MODIFY_HEALTH, UPDATE_ENEMY,  CREATE_LEVEL } from '../constants/action-types'
 import * as t from '../constants/action-types';
 
 let initialState = {
-  entities: createLevel(),
+  entities: populateEntities(createLevel()),
   dungeonLevel: 1,
   playerPosition: STARTING_ROOM_POSITION
 }

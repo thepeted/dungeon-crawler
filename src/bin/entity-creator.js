@@ -1,20 +1,95 @@
-export const createEnemy = (level) => {
+import _ from 'lodash';
+import * as c from '../constants/settings';
 
-  return {
-    health: 100,
-    level,
-    type: 'enemy'
-  }
-}
-
-export const createPlayer = () => {
-  let player = {
-    level: 1,
+export default (world, level = 1) => {
+  //set starting player posiiton
+  const player = {
     type: 'player',
-    weapon: {
-      type: 'Wooden Sword',
-      damage: 10
-    }
+    health: 100
+  };
+  world[c.STARTING_ROOM_POSITION[1]][c.STARTING_ROOM_POSITION[0]] = player;
+
+
+  let enemies = [];
+  for (let i = 0; i < 7; i++) {
+    enemies.push({
+      type: 'enemy',
+      health: 100,
+      //half of the enememies will be a level higher or lower (except on
+      //level 1, where ~1/4 enemies level higher)
+      level: _.random(level, _.random(level - 1 ? level -1 : level, level + 1))
+    });
   }
-  return player
+
+  let potions = [];
+  for (let i = 0; i < 5; i++) {
+    potions.push({ type: 'potion' });
+  }
+
+  let weaponTypes = [
+    {
+      name: 'Laser Pistol',
+      damage: 15
+    },
+    {
+      name: 'Laser Rifle',
+      damage: 23
+    },
+    {
+      name: 'Plasma Pistol',
+      damage: 26
+    },
+    {
+      name: 'Plasma Rifle',
+      damage: 30
+    },
+    {
+      name: 'Electric ChainSaw',
+      damage: 33
+    },
+    {
+      name: 'Railgun',
+      damage: 37
+    },
+    {
+      name: 'Dark Energy Cannon',
+      damage: 40
+    },
+    {
+      name: 'B.F.G',
+      damage: 49
+    }
+  ];
+
+  let weapons = [];
+  let qualifying = weaponTypes
+    .filter(weapon => weapon.damage < level * 10 + 20 )
+      .filter(weapon => weapon.damage > level * 10 - 10)
+
+  for (let i =0; i < 3; i++) {
+    let randomNum = _.random(0,qualifying.length-1);
+    let weapon = _.clone(qualifying[randomNum]);
+    weapon.type = 'weapon';
+    weapons.push(weapon);
+  }
+
+  let exits = [];
+  if (level < 4){
+    exits.push({
+      type: 'exit'
+    })
+  }
+
+  let entityCollection = [potions, enemies, weapons, exits];
+  entityCollection.forEach(entities => {
+    while(entities.length){
+      let x = [Math.floor(Math.random()*c.GRID_WIDTH)]
+      let y = [Math.floor(Math.random()*c.GRID_HEIGHT)]
+      if (world[y][x].type === 'floor') {
+        world[y][x] = entities.pop();
+      }
+    }
+  });
+
+return world;
 }
