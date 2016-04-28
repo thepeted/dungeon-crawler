@@ -60,11 +60,11 @@ export function toggleFogMode() {
 export default (vector) => {
   return (dispatch, getState) => {
     const state = getState();
-    let [ x, y ] = state.playerPosition.slice(0); //get current location
+    let [ x, y ] = state.grid.playerPosition.slice(0); //get current location
     let [ vectorX, vectorY ] = vector; //get direction modifier
     let newPosition = [vectorX + x, vectorY + y]; //define where we're moving to
-    let player = _.clone(state.entities[y][x]);
-    let destination = _.clone(state.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
+    let player = _.clone(state.grid.entities[y][x]);
+    let destination = _.clone(state.grid.entities[y + vectorY][x + vectorX]); //whats in the cell we're heading to
 
     //move the player unless destination is an enemy or a '0' cell
     if (destination.type && destination.type !== 'enemy') {
@@ -75,10 +75,10 @@ export default (vector) => {
 
     switch(destination.type){
       case 'enemy':
-        let playerLevel = Math.floor(state.playerXP / 100);
+        let playerLevel = Math.floor(state.player.playerXP / 100);
 
         //player attacks enemy
-        destination.health-= Math.floor(state.playerWeapon.damage * _.random(1,1.3) * playerLevel);
+        destination.health-= Math.floor(state.player.playerWeapon.damage * _.random(1,1.3) * playerLevel);
 
         if (destination.health > 0) {
           //enemy attacks player
@@ -97,7 +97,7 @@ export default (vector) => {
           break
         }
       case 'exit':
-        dispatch(createLevel(state.dungeonLevel + 1))
+        dispatch(createLevel(state.grid.dungeonLevel + 1))
         dispatch(advanceDungeonLevel());
         break
       case 'potion':

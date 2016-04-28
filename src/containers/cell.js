@@ -25,8 +25,8 @@ class Cell extends Component {
 
 }
 
-const mapStateToProps = ({fogMode}) => {
-  return { fogMode }
+const mapStateToProps = (state) => {
+  return { fogMode: state.ui.fogMode }
 }
 
 export default connect(mapStateToProps)(Cell)

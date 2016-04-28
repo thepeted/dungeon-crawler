@@ -8,22 +8,11 @@ import * as t from '../constants/action-types';
 let initialState = {
   entities: createLevel(),
   dungeonLevel: 1,
-  fogMode: true,
-  playerHealth: 100,
-  playerPosition: STARTING_ROOM_POSITION,
-  playerXP: 100,
-  playerWeapon: {
-    name: 'Taser',
-    damage: 10
-  }
+  playerPosition: STARTING_ROOM_POSITION
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case t.ADD_WEAPON:
-      return Object.assign({}, state, {playerWeapon: action.payload});
-    case t.ADD_XP:
-      return Object.assign({}, state, {playerXP: state.playerXP + action.payload});
     case t.ADVANCE_DUNGEON:
       return Object.assign({}, state, {dungeonLevel: state.dungeonLevel + 1});
     case t.CHANGE_ENTITY:
@@ -38,10 +27,6 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {playerPosition: action.payload})
     case t.CREATE_LEVEL:
       return Object.assign({}, state, {playerPosition: STARTING_ROOM_POSITION}, {entities: action.payload});
-    case t.TOGGLE_FOG_MODE:
-      return Object.assign({}, state, {fogMode: !state.fogMode})
-    case t.MODIFY_HEALTH:
-      return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
     default:
       return state;
   }
