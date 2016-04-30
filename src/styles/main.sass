@@ -1,4 +1,4 @@
-@import './resets/normalize.css'
+@import './resets/reset.css'
 
 $grid-color: #78d376
 $player-color: #009e37
@@ -10,15 +10,40 @@ body
   font-size: 16px
   color: #ddd
 
+.container
+  margin-left: 1rem
+  margin-right: 1rem
+  margin-bottom: 1rem
+
+.strip
+  display: flex
+  justify-content: center
+  margin-top: 1rem
+  margin-bottom: 1rem
+  padding: 0.8em 1.2em
+  background: rgba(0,0,0,0.2)
+
+h1
+  font-weight: 600
+  font-size: 1.2em
+
+#app
+  display: flex
+  justify-content: center
+
+.row
+  display: flex
+  justify-content: center
+
 .cell
-  float: left
-  height: 1.1em
-  width: 1.2em
-  border: 0px
-  background: $grid-color
+  height: 1em
+  width: 1em
   border: 1px solid $background-color
 
-.floor, .door
+.back
+  background: $grid-color
+
+.floor
   background: #ddd
   border: 1px solid #eee
 
@@ -38,7 +63,63 @@ body
 .exit
   background: purple
 
-.clearfix:after
-  content: ""
-  display: table
-  clear: both
+.sidebar
+  display: flex
+  flex-direction: column
+  margin-left: 1rem
+  margin-right: 1rem
+  width: 16rem
+  font-size: 0.8rem
+  color: #ddd
+
+.grid-wrapper
+  border: 1px solid rgba(0,0,0,0.2)
+
+.panel
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  margin-bottom: 1em
+  padding: 0.8em 1.2em
+  background: rgba(0,0,0,0.2)
+
+
+.score-item
+  display: flex
+  margin: 0.6em 0
+  min-width: 40%
+
+.icon
+  margin-right: 0.5em
+
+input
+  position: absolute
+  left: -9999px
+
+label
+  cursor: pointer
+
+label::before
+  display: inline-block
+  content: ''
+  height: 1em
+  width: 1em
+  border: 1px solid yellow
+  margin-right: 0.5em
+  vertical-align: bottom
+
+input:checked + label::before
+  background: red
+
+.messages
+  ul
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    margin: 0
+  li
+    list-style-type: none
+    opacity: 0.3
+    &:last-child
+      opacity: 1.0
+      color: #78d376

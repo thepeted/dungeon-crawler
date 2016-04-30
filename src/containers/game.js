@@ -4,25 +4,35 @@ import { connect } from 'react-redux';
 
 import playerInput from '../actions/';
 import Cell from './cell';
-import Controls from './controls';
 
-
-import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from '../constants/settings';
+const V_OFFSET = 5; // in ems to match any elements above component in page layout
 
 class grid extends Component {
   constructor(){
     super();
-    this.handleKeyPress = _.throttle(this.handleKeyPress.bind(this),100);
+    this.state = {
+      viewportWidth: 0,
+      viewportHeight: 0
+    }
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  componentWillMount(){
+    let viewportWidth = window.innerWidth / 30;
+    let viewportHeight = Math.max(15, (window.innerHeight / 21) - V_OFFSET);
+    this.setState({ viewportWidth, viewportHeight });
   }
 
   componentDidMount(){
-    window.addEventListener('keydown', this.handleKeyPress);
+    window.addEventListener('keydown', _.throttle(this.handleKeyPress,100));
+    window.addEventListener('resize', _.debounce(this.handleResize,500));
   }
 
   render() {
     //must be divisible by 2
-    let viewportHeight = VIEWPORT_HEIGHT - VIEWPORT_HEIGHT % 2;
-    let viewportWidth = VIEWPORT_WIDTH - VIEWPORT_WIDTH % 2;
+    let viewportHeight = this.state.viewportHeight - this.state.viewportHeight % 2;
+    let viewportWidth = this.state.viewportWidth - this.state.viewportWidth % 2;
     let [playerX, playerY] = this.props.grid.playerPosition;
 
     let top = _.clamp(playerY - viewportHeight / 2, 0, this.props.grid.entities.length - viewportHeight);
@@ -37,14 +47,6 @@ class grid extends Component {
 
     return (
       <div className="grid-wrapper clearfix">
-        <div>
-          Health: {this.props.player.playerHealth}
-          Weapon: {this.props.player.playerWeapon.name}({this.props.player.playerWeapon.damage})
-          Player Level: {Math.floor(this.props.player.playerXP / 100)}
-          XP to LevelUp: {100 - this.props.player.playerXP % 100}
-          Dungeon Level: {this.props.grid.dungeonLevel}
-          <Controls />
-        </div>
           {
             newEntities.filter((row, i) => i >= top && i <= bottom)
               .map((row , i) => {
@@ -82,6 +84,13 @@ class grid extends Component {
       default:
         return
     }
+  }
+
+  handleResize(e){
+
+    let viewportWidth = e.target.innerWidth / 30;
+    let viewportHeight = Math.max(15, (e.target.innerHeight / 21) - V_OFFSET);
+    this.setState({ viewportWidth, viewportHeight });
   }
 }
 

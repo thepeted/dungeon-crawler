@@ -1,7 +1,18 @@
 import * as t from '../constants/action-types';
 
+let messages = [
+  "Player 1 died",
+  "Player 1 won",
+  "Player 1 attacks orc for 3XP",
+  "etc..",
+  "Game over",
+  "You win",
+  "Entering new dungeon"
+]
+
 const initialState = {
-  fogMode: true
+  fogMode: true,
+  messages
 }
 
 export default (state = initialState, action) => {
