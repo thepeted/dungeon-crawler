@@ -40,8 +40,20 @@ h1
   width: 1em
   border: 1px solid $background-color
 
-.back
+.back1
   background: $grid-color
+
+.back2
+  background: cornsilk
+  transition: background-color 3s
+
+.back3
+  background: pink
+  transition: background-color 3s
+
+.back4
+  background: gray
+  transition: background-color 3s
 
 .floor
   background: #ddd
@@ -118,8 +130,10 @@ input:checked + label::before
     justify-content: flex-end
     margin: 0
   li
+    margin-bottom: 0.5rem
     list-style-type: none
     opacity: 0.3
     &:last-child
+      margin-bottom: 0
       opacity: 1.0
       color: #78d376

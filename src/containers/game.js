@@ -54,7 +54,12 @@ class grid extends Component {
                   <div key={i} className="row clearfix"> {
                     row.filter((cell, i) => i >= left && i <= right)
                       .map((cell, j) => {
-                        return <Cell key={j} cell={cell} distance={cell.distanceFromPlayer} />
+                        return <Cell
+                          key={j}
+                          cell={cell}
+                          distance={cell.distanceFromPlayer}
+                          zone={this.props.grid.dungeonLevel}
+                          />
                       })
                     }</div>
                 )
