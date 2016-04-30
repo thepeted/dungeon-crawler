@@ -1,14 +1,6 @@
 import * as t from '../constants/action-types';
 
-let messages = [
-  "Player 1 died",
-  "Player 1 won",
-  "Player 1 attacks orc for 3XP",
-  "etc..",
-  "Game over",
-  "You win",
-  "Entering new dungeon"
-]
+let messages = []
 
 const initialState = {
   fogMode: true,
@@ -18,7 +10,10 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type){
     case t.TOGGLE_FOG_MODE:
-      return Object.assign({}, state, {fogMode: !state.fogMode})
+      return Object.assign({}, state, {fogMode: !state.fogMode});
+    case t.NEW_MESSAGE:
+      let messages = state.messages.concat(action.payload)
+      return Object.assign({}, state, { messages });
     default:
       return state;
   }
