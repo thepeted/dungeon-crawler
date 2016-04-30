@@ -19,6 +19,6 @@ User Stories TODO:
 
 - ~~User Story: When I fight an enemy, we take turns damaging each other until one of us loses. I do damage based off of my level and my weapon. The enemy does damage based off of its level. Damage is somewhat random within a range.~~
 
-- User Story: When I find and beat the boss, I win.
+- ~~User Story: When I find and beat the boss, I win.~~
 
 - User Story: The game should be challenging, but theoretically winnable.
