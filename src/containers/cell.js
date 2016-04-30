@@ -17,7 +17,7 @@ class Cell extends Component {
     }
     return (
       <div
-        className={this.props.cell.type ? `${this.props.cell.type} cell` : `back${this.props.zone} cell`}
+        className={this.props.cell.type ? `${this.props.cell.type} cell` : `back-${this.props.zone} cell`}
         style={divStyle}
          />
     )

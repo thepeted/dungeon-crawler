@@ -71,23 +71,25 @@ class grid extends Component {
   }
 
   handleKeyPress(e){
-    switch(e.keyCode) {
-        //north
-      case 87:
-        this.props.playerInput([0,-1]);
-        break;
-        //east
-      case 68:
-        this.props.playerInput([1,0]);
-        break;
-      case 83:
-        this.props.playerInput([0,1]);
-        break;
-      case 65:
-        this.props.playerInput([-1,0]);
-        break;
-      default:
-        return
+    if (typeof(this.props.grid.dungeonLevel) === "number") {
+      switch(e.keyCode) {
+          //north
+        case 87:
+          this.props.playerInput([0,-1]);
+          break;
+          //east
+        case 68:
+          this.props.playerInput([1,0]);
+          break;
+        case 83:
+          this.props.playerInput([0,1]);
+          break;
+        case 65:
+          this.props.playerInput([-1,0]);
+          break;
+        default:
+          return
+      }
     }
   }
 

@@ -4,14 +4,23 @@ import * as c from '../constants/settings';
 export default (world, level = 1) => {
   //set starting player posiiton
 
+  let bosses = [];
+  if (level === 4){
+    bosses.push({
+      health: 20, // value is just for testing :)
+      level: 1, // value is just for testing :)
+      type: 'boss',
+    })
+  }
+
   let enemies = [];
   for (let i = 0; i < 7; i++) {
     enemies.push({
-      type: 'enemy',
       health: 100,
       //half of the enememies will be a level higher or lower (except on
       //level 1, where ~1/4 enemies level higher)
-      level: _.random(level, _.random(level - 1 ? level -1 : level, level + 1))
+      level: _.random(level, _.random(level - 1 ? level -1 : level, level + 1)),
+      type: 'enemy'
     });
   }
 
@@ -82,7 +91,7 @@ export default (world, level = 1) => {
 
   let playerStartingPosition = [];
 
-  let entityCollection = [potions, enemies, weapons, exits, players];
+  let entityCollection = [potions, enemies, weapons, exits, players, bosses];
   entityCollection.forEach(entities => {
     while(entities.length){
       let x = Math.floor(Math.random()*c.GRID_WIDTH)

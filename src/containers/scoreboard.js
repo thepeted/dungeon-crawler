@@ -16,7 +16,7 @@ class Scoreboard extends Component {
           value={this.props.player.playerHealth}
           />
         <Score
-          iconClass="back"
+          iconClass={`back-${this.props.grid.dungeonLevel}`}
           title="Zone"
           value={this.props.grid.dungeonLevel}
           />

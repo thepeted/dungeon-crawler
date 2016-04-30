@@ -6,27 +6,23 @@ import { toggleFogMode } from '../actions';
 class PlayerSettings extends Component {
   constructor(){
     super()
-    this.handleChange = this.handleChange.bind(this);
   }
   render(){
     return (
       <div className='panel'>
         <div className="score-item">
-        <input
-        onChange={() => this.handleChange()}
-        id="toggle"
-        type="checkbox"
-        checked={this.props.ui.fogMode}
-        />
-        <label htmlFor="toggle">
-        Toggle fog mode
-      </label>
-    </div>
+          <input
+          onChange={this.props.toggleFogMode}
+          id="toggle"
+          type="checkbox"
+          checked={this.props.ui.fogMode}
+          />
+          <label htmlFor="toggle">
+          Toggle fog mode
+          </label>
+        </div>
       </div>
     )
-  }
-  handleChange(){
-    this.props.toggleFogMode()
   }
 }
 
@@ -36,7 +32,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleFogMode: () => dispatch(toggleFogMode())
+    toggleFogMode: () => dispatch(toggleFogMode()),
   }
 }
 

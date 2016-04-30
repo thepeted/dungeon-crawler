@@ -18,12 +18,6 @@ function addXP(payload){
   }
 }
 
-function advanceDungeonLevel() {
-  return {
-    type: t.ADVANCE_DUNGEON
-  }
-}
-
 function changeEntity(entity, coords){
   return {
     type: t.CHANGE_ENTITY,
@@ -59,6 +53,19 @@ function newMessage(payload) {
   }
 }
 
+export function restart() {
+  return {
+    type: t.RESTART
+  }
+}
+
+function setDungeonLevel(payload) {
+  return {
+    type: t.SET_DUNGEON_LEVEL,
+    payload
+  }
+}
+
 export function toggleFogMode() {
   return {
     type: t.TOGGLE_FOG_MODE
@@ -81,7 +88,7 @@ export default (vector) => {
     let actions = []
 
     //move the player unless destination is an enemy or a '0' cell
-    if (destination.type && destination.type !== 'enemy') {
+    if (destination.type && destination.type !== 'enemy'  && destination.type !=='boss') {
       actions.push(
         changeEntity({ type: 'floor'}, [x,y] ),
         changeEntity(player, newPosition),
@@ -90,7 +97,10 @@ export default (vector) => {
     }
 
     switch(destination.type){
+      case 'boss':
       case 'enemy':
+        let restartActions = [ restart(), createLevel(1), setDungeonLevel(1)]
+
         let playerLevel = Math.floor(state.player.playerXP / 100);
         //player attacks enemy
         let enemyDamageTaken = Math.floor(state.player.playerWeapon.damage * _.random(1,1.3) * playerLevel);
@@ -102,39 +112,64 @@ export default (vector) => {
 
           actions.push(
             changeEntity(destination , newPosition),
-            modifyHealth(0 - playerDamageTaken),
+            modifyHealth(state.player.playerHealth - playerDamageTaken),
             newMessage(`FIGHT! You hurt the enemy with attack of ${enemyDamageTaken}.  The enemy hits back with an attack of ${playerDamageTaken}`)
           );
+
+          //player dies
+          if (state.player.playerHealth - playerDamageTaken <= 0) {
+            dispatch(modifyHealth(0));
+            dispatch(setDungeonLevel("death"));
+            setTimeout(() => dispatch(newMessage(`YOU DIED`)),1000);
+            setTimeout(() => dispatch(newMessage(`Everything goes red..`)),2000);
+            setTimeout(() => dispatch(newMessage(`You resolve to try harder next time`)),4000);
+            setTimeout(() => dispatch(newMessage(`The grid resets itself....`)),6000);
+            setTimeout(() => dispatch(batchActions(restartActions)),8000)
+            return
+          }
         }
+        console.log(destination.type);
+        console.log(destination.health);
 
         if (destination.health <= 0){
           //the fight is over and the player has won
           //add XP and move the player
-          actions.push(
-            addXP(20 * destination.level),
-            changeEntity({ type: 'floor'}, [x,y] ),
-            changeEntity(player, newPosition),
-            changePlayerPosition(newPosition),
-            newMessage(`VICTORY! Your attack of ${enemyDamageTaken} is too powerful for the enemy, who dissolves before your very eyes.`)
-          );
-
-          setTimeout(() => dispatch(newMessage(`You gain 20XP and feel yourself growing stronger..`)),2500);
-
-          if ((state.player.playerXP + 20) % 100 === 0) {
-            setTimeout(() => dispatch(newMessage(`LEVEL UP!`)),5000)
+          if (destination.type === 'boss') {
+            console.log('boss victory')
+            dispatch(setDungeonLevel("victory"))
+            setTimeout(() => dispatch(newMessage(`YOU WIN!`)),1000);
+            setTimeout(() => dispatch(newMessage(`The boss emits an almighty scream`)),2000);
+            setTimeout(() => dispatch(newMessage(`You bask momentarily in your glory`)),4000);
+            setTimeout(() => dispatch(newMessage(`The grid resets itself....`)),6000);
+            setTimeout(() => dispatch(batchActions(restartActions)),8000)
+          } else {
+            actions.push(
+              addXP(20 * destination.level),
+              changeEntity({ type: 'floor'}, [x,y] ),
+              changeEntity(player, newPosition),
+              changePlayerPosition(newPosition),
+              newMessage(`VICTORY! Your attack of ${enemyDamageTaken} is too powerful for the enemy, who dissolves before your very eyes.`)
+            );
+            setTimeout(() => dispatch(newMessage(`You gain 20XP and feel yourself growing stronger..`)),2500);
+            if ((state.player.playerXP + 20) % 100 === 0) {
+              setTimeout(() => dispatch(newMessage(`LEVEL UP!`)),5000)
+            }
           }
         }
         break
       case 'exit':
+          setTimeout(() => dispatch(batchActions([
+            setDungeonLevel(state.grid.dungeonLevel + 1),
+            createLevel(state.grid.dungeonLevel + 1)
+          ])),3000);
         actions.push(
-          createLevel(state.grid.dungeonLevel + 1),
-          advanceDungeonLevel(),
-          newMessage(`The cells start to shift... you find yourself in zone ${state.grid.dungeonLevel + 1}`)
+          newMessage(`The cells start to shift... you transit to zone ${state.grid.dungeonLevel + 1}`),
+          dispatch(setDungeonLevel(`transit-${state.grid.dungeonLevel + 1}`))
         );
         break
       case 'potion':
         actions.push(
-          modifyHealth(20),
+          modifyHealth(state.player.playerHealth + 20),
           newMessage(`You drink a potion for 20 health`)
         );
         break

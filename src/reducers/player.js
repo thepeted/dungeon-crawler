@@ -16,7 +16,9 @@ export default (state = initialState, action) => {
     case t.ADD_XP:
       return Object.assign({}, state, {playerXP: state.playerXP + action.payload});
     case t.MODIFY_HEALTH:
-      return Object.assign({},state,{playerHealth: state.playerHealth + action.payload});
+      return Object.assign({},state,{playerHealth: action.payload});
+    case t.RESTART:
+      return initialState;
     default:
       return state;
   }
