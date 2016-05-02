@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server",
-    "deployghpages": "gh-pages -d build"
+    "deployghpages": "gh-pages -d build",
+    "test": "xo"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
     "babel-preset-stage-2": "^6.5.0",
     "clean-webpack-plugin": "^0.1.8",
     "css-loader": "^0.23.1",
+    "eslint-config-xo-react": "^0.7.0",
+    "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "gh-pages": "^0.11.0",
     "html-loader": "^0.4.3",
@@ -38,7 +41,8 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.12.15",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.10.0"
+    "webpack-merge": "^0.10.0",
+    "xo": "^0.15.0"
   },
   "dependencies": {
     "lodash": "^4.11.1",
@@ -49,5 +53,17 @@
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1",
     "redux-batched-actions": "^0.1.2"
+  },
+  "xo": {
+		"env": ["node", "browser"],
+    "esnext": true,
+    "extends": "xo-react",
+    "rules": {
+      "babel/object-curly-spacing": "off",
+      "babel/array-bracket-spacing": "off",
+			"babel/arrow-parens": "off",
+			"react/prop-types": "off"
+
+    }
   }
 }
