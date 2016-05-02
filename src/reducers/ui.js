@@ -7,13 +7,12 @@ const initialState = {
   messages
 }
 
-export default (state = initialState, action) => {
-  switch(action.type){
+export default (state = initialState, { type, payload }) => {
+  switch(type) {
     case t.NEW_MESSAGE:
-      let messages = state.messages.concat(action.payload)
-      return Object.assign({}, state, { messages });
+      return { ...state, messages: [ ...state.messages, payload ]}
     case t.TOGGLE_FOG_MODE:
-      return Object.assign({}, state, {fogMode: !state.fogMode});
+      return { ...state, fogMode: !state.fogMode }
     case t.RESTART:
      return initialState;
     default:

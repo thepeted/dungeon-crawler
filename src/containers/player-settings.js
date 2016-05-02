@@ -1,33 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { toggleFogMode } from '../actions';
 
-class PlayerSettings extends Component {
-  constructor(){
-    super()
-  }
-  render(){
-    return (
-      <div className='panel'>
-        <div className="score-item">
-          <input
-          onChange={this.props.toggleFogMode}
-          id="toggle"
-          type="checkbox"
-          checked={this.props.ui.fogMode}
-          />
-          <label htmlFor="toggle">
-          Toggle fog mode
-          </label>
-        </div>
+const PlayerSettings = ( { fogMode, toggleFogMode, }) => {
+  return (
+    <div className='panel'>
+      <div className="score-item">
+        <input
+        onChange={toggleFogMode}
+        id="toggle"
+        type="checkbox"
+        checked={fogMode}
+        />
+        <label htmlFor="toggle">
+        Toggle fog mode
+        </label>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return {ui: state.ui}
+const mapStateToProps = ( { ui } ) => {
+  return { fogMode: ui.fogMode }
 }
 
 const mapDispatchToProps = (dispatch) => {

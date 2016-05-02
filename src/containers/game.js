@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import playerInput from '../actions/';
-import Cell from './cell';
+import Cell from '../components/cell';
 
 const V_OFFSET = 5; // in ems to match any elements above component in page layout
 
@@ -30,43 +30,52 @@ class grid extends Component {
   }
 
   render() {
+
     //must be divisible by 2
     let viewportHeight = this.state.viewportHeight - this.state.viewportHeight % 2;
     let viewportWidth = this.state.viewportWidth - this.state.viewportWidth % 2;
-    let [playerX, playerY] = this.props.grid.playerPosition;
+    const { entities } = this.props.grid;
+    let [ playerX, playerY ] = this.props.grid.playerPosition;
 
-    let top = _.clamp(playerY - viewportHeight / 2, 0, this.props.grid.entities.length - viewportHeight);
+
+    let top = _.clamp(playerY - viewportHeight / 2, 0, entities.length - viewportHeight);
     let bottom = Math.max(playerY + viewportHeight / 2, viewportHeight);
-    let left = _.clamp(playerX - viewportWidth / 2, 0, this.props.grid.entities[0].length - viewportWidth);
+    let left = _.clamp(playerX - viewportWidth / 2, 0, entities[0].length - viewportWidth);
     let right = Math.max(playerX + viewportWidth / 2, viewportWidth);
 
-    let newEntities = this.props.grid.entities.map((row, i) => row.map((cell, j) => {
+    let newEntities = entities.map((row, i) => row.map((cell, j) => {
       cell.distanceFromPlayer = (Math.abs(playerY - i)) + (Math.abs(playerX - j));
       return cell;
     }))
 
-    return (
-      <div className="grid-wrapper clearfix">
+    const cells = newEntities.
+    filter((row, i) => i >= top && i <= bottom).
+    map((row, i) => {
+      return (
+        <div key={i} className="row">
           {
-            newEntities.filter((row, i) => i >= top && i <= bottom)
-              .map((row , i) => {
-                return (
-                  <div key={i} className="row clearfix"> {
-                    row.filter((cell, i) => i >= left && i <= right)
-                      .map((cell, j) => {
-                        return <Cell
-                          key={j}
-                          cell={cell}
-                          distance={cell.distanceFromPlayer}
-                          zone={this.props.grid.dungeonLevel}
-                          />
-                      })
-                    }</div>
-                )
-              })
+            row.
+            filter((row, i) => i >= left && i <= right).
+            map((cell, j) => {
+              return (
+                <Cell
+                  key={j}
+                  cell={cell}
+                  distance={cell.distanceFromPlayer}
+                  zone={this.props.grid.dungeonLevel}
+                  visible={this.props.fogMode}
+                  />
+              )
+            })
           }
-      </div>
+        </div>
+      )
+    });
 
+    return (
+      <div className="grid-wrapper">
+          {cells}
+      </div>
     )
   }
 
@@ -101,8 +110,8 @@ class grid extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { grid: state.grid, player: state.player };
+const mapStateToProps = ({ ui, grid, player }) => {
+  return { fogMode: ui.fogMode, grid, player };
 }
 
 const mapDispatchToProps = (dispatch) => {
