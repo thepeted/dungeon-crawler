@@ -85,8 +85,7 @@ export default (gameMap, level = 1) => {
 		.filter(weapon => weapon.damage < level * 10 + 20)
       .filter(weapon => weapon.damage > level * 10 - 10);
 	for (let i = 0; i < 3; i++) {
-		const randomNum = _.random(0, qualifying.length - 1);
-		const weapon = _.clone(qualifying[randomNum]);
+		const weapon = Object.assign({}, qualifying[_.random(0, qualifying.length - 1)]);
 		weapon.type = 'weapon';
 		weapons.push(weapon);
 	}

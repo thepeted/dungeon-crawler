@@ -82,8 +82,8 @@ export default (vector) => {
 		const [ x, y ] = grid.playerPosition.slice(0); // get current location
 		const [ vectorX, vectorY ] = vector; // get direction modifier
 		const newPosition = [vectorX + x, vectorY + y]; // define where we're moving to
-		const newPlayer = _.clone(grid.entities[y][x]);
-		const destination = _.clone(grid.entities[y + vectorY][x + vectorX]); // whats in the cell we're heading to
+		const newPlayer = grid.entities[y][x];
+		const destination = grid.entities[y + vectorY][x + vectorX]; // whats in the cell we're heading to
 		// store the actions in array to be past to batchActions
 		const actions = [];
 
