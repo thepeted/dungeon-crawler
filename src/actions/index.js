@@ -32,10 +32,10 @@ function changePlayerPosition(payload) {
 	};
 }
 
-function createLevel(level) {
+export function createLevel() {
 	return {
 		type: t.CREATE_LEVEL,
-		payload: populateEntities(createMap(), level)
+		payload: populateEntities(createMap())
 	};
 }
 
@@ -59,7 +59,7 @@ export function restart() {
 	};
 }
 
-function setDungeonLevel(payload) {
+export function setDungeonLevel(payload) {
 	return {
 		type: t.SET_DUNGEON_LEVEL,
 		payload
@@ -75,14 +75,15 @@ export function toggleFogMode() {
 // a thunk!
 export default (vector) => {
 	return (dispatch, getState) => {
-		const { grid, player } = getState();
+
+		let { grid, player } = getState();
+
 		// cache some useful variables
 		const [ x, y ] = grid.playerPosition.slice(0); // get current location
 		const [ vectorX, vectorY ] = vector; // get direction modifier
 		const newPosition = [vectorX + x, vectorY + y]; // define where we're moving to
 		const newPlayer = _.clone(grid.entities[y][x]);
 		const destination = _.clone(grid.entities[y + vectorY][x + vectorX]); // whats in the cell we're heading to
-
 		// store the actions in array to be past to batchActions
 		const actions = [];
 
@@ -94,10 +95,10 @@ export default (vector) => {
 				changePlayerPosition(newPosition)
 			);
 		}
-
 		switch (destination.type) {
 			case 'boss':
 			case 'enemy': {
+
 				const playerLevel = Math.floor(player.xp / 100);
 				// player attacks enemy
 				const enemyDamageTaken = Math.floor(player.weapon.damage * _.random(1, 1.3) * playerLevel);
@@ -154,7 +155,7 @@ export default (vector) => {
 						actions.push(
 							addXP(20 * destination.level),
 							changeEntity({ type: 'floor'}, [x, y]),
-							changeEntity(player, newPosition),
+							changeEntity(newPlayer, newPosition),
 							changePlayerPosition(newPosition),
 							newMessage(`VICTORY! Your attack of ${enemyDamageTaken} is too powerful for the enemy, who dissolves before your very eyes.`)
 						);

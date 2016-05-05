@@ -93,16 +93,15 @@ export default (gameMap, level = 1) => {
 
 	// 2. randomly place all the entities on to floor cells on the game map.
 
-	// this function needs to return the players starting co-ordinates
-	let playerStartingPosition = [];
-
+	//// we'll need to return the players starting co-ordinates
+	let playerPosition = [];
 	[potions, enemies, weapons, exits, players, bosses].forEach(entities => {
 		while (entities.length) {
 			const x = Math.floor(Math.random() * c.GRID_WIDTH);
 			const y = Math.floor(Math.random() * c.GRID_HEIGHT);
 			if (gameMap[y][x].type === 'floor') {
 				if (entities[0].type === 'player') {
-					playerStartingPosition = [x, y];
+					playerPosition = [x, y];
 				}
 				gameMap[y][x] = entities.pop();
 			}
@@ -118,7 +117,5 @@ export default (gameMap, level = 1) => {
 			}
 		}
 	}
-
-		console.timeEnd('test3')
-	return {entities: gameMap, playerPosition: _.clone(playerStartingPosition), dungeonLevel: level};
+	return {entities: gameMap, playerPosition};
 };

@@ -1,17 +1,12 @@
 import update from 'react-addons-update';
-import createLevel from '../bin/game-map-creator';
-import populateEntities from '../bin/entity-creator';
 import * as t from '../constants/action-types';
 
 
-const {
-	entities,
-	dungeonLevel,
-	playerPosition
-} = populateEntities(createLevel());
-
-
-const initialState = { entities, dungeonLevel, playerPosition };
+const initialState = {
+	entities: [[]],
+	dungeonLevel: 0,
+	playerPosition: []
+};
 
 export default (state = initialState, { type, payload }) => {
 	switch (type) {

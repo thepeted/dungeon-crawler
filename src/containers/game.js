@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import playerInput from '../actions/';
+import playerInput, { createLevel, setDungeonLevel } from '../actions/';
 import Cell from '../components/cell';
 
 const V_OFFSET = 5; // in ems to match any elements above component in page layout
@@ -21,6 +21,8 @@ class grid extends Component {
 	componentWillMount() {
 		const viewportWidth = window.innerWidth / 30;
 		const viewportHeight = Math.max(15, (window.innerHeight / 21) - V_OFFSET);
+		this.props.createLevel();
+		this.props.setDungeonLevel(1);
 		this.setState({ viewportWidth, viewportHeight });
 	}
 
@@ -114,7 +116,9 @@ const mapStateToProps = ({ ui, grid, player }) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		playerInput: (vector) => dispatch(playerInput(vector))
+		playerInput: (vector) => dispatch(playerInput(vector)),
+		createLevel: () => dispatch(createLevel()),
+		setDungeonLevel: (level) => dispatch(setDungeonLevel(level))
 	};
 };
 

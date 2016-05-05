@@ -3,7 +3,6 @@ import * as c from '../constants/settings';
 
 export default () => {
   // HELPER FUNCTIONS FOR CREATING THE MAP
-  console.time('test3')
   const isValidRoomPlacement = (grid, {x, y, width = 1, height = 1}) => {
     // check if on the edge of or outside of the grid
     if (y < 1 || y + height > grid.length - 1) {
