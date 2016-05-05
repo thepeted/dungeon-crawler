@@ -32,10 +32,10 @@ function changePlayerPosition(payload) {
 	};
 }
 
-export function createLevel() {
+export function createLevel(level) {
 	return {
 		type: t.CREATE_LEVEL,
-		payload: populateEntities(createMap())
+		payload: populateEntities(createMap(), level)
 	};
 }
 
