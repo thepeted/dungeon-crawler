@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { batchActions } from 'redux-batched-actions';
-import createMap from '../bin/map-creator';
+import createMap from '../bin/game-map-creator';
 import populateEntities from '../bin/entity-creator';
 import * as t from '../constants/action-types';
 

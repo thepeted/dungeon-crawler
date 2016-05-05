@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import * as c from '../constants/settings';
 
-export default (world, level = 1) => {
-// set starting player posiiton
+export default (gameMap, level = 1) => {
 
+	// TODO - do we need the '_.clones'?
+
+	// 1. create the entities
 	const bosses = [];
 	if (level === 4) {
 		bosses.push({
@@ -18,11 +20,24 @@ export default (world, level = 1) => {
 		enemies.push({
 			health: 100,
 			// half of the enememies will be a level higher or lower (except on
-			// level 1, where ~1/4 enemies level higher)
+			// level 1, where ~1/4 enemies are a level higher)
 			level: _.random(level, _.random(level - 1 ? level - 1 : level, level + 1)),
 			type: 'enemy'
 		});
 	}
+
+	const exits = [];
+	if (level < 4) {
+		exits.push({
+			type: 'exit'
+		});
+	}
+
+	const players = [
+		{
+			type: 'player'
+		}
+	];
 
 	const potions = [];
 	for (let i = 0; i < 5; i++) {
@@ -65,10 +80,10 @@ export default (world, level = 1) => {
 	];
 
 	const weapons = [];
+	//weapon types will vary based on the level passed to the parent function
 	const qualifying = weaponTypes
 		.filter(weapon => weapon.damage < level * 10 + 20)
       .filter(weapon => weapon.damage > level * 10 - 10);
-
 	for (let i = 0; i < 3; i++) {
 		const randomNum = _.random(0, qualifying.length - 1);
 		const weapon = _.clone(qualifying[randomNum]);
@@ -76,43 +91,34 @@ export default (world, level = 1) => {
 		weapons.push(weapon);
 	}
 
-	const exits = [];
-	if (level < 4) {
-		exits.push({
-			type: 'exit'
-		});
-	}
+	// 2. randomly place all the entities on to floor cells on the game map.
 
-	const players = [
-		{
-			type: 'player'
-		}
-	];
-
+	// this function needs to return the players starting co-ordinates
 	let playerStartingPosition = [];
 
-	const entityCollection = [potions, enemies, weapons, exits, players, bosses];
-	entityCollection.forEach(entities => {
+	[potions, enemies, weapons, exits, players, bosses].forEach(entities => {
 		while (entities.length) {
 			const x = Math.floor(Math.random() * c.GRID_WIDTH);
 			const y = Math.floor(Math.random() * c.GRID_HEIGHT);
-			if (world[y][x].type === 'floor') {
+			if (gameMap[y][x].type === 'floor') {
 				if (entities[0].type === 'player') {
 					playerStartingPosition = [x, y];
 				}
-				world[y][x] = entities.pop();
+				gameMap[y][x] = entities.pop();
 			}
 		}
 	});
 
-	const availableFloorCells = [];
-	world.map((row, i) => {
-		return row.forEach((cell, j) => {
-			if (cell.type === 'floor') {
-				availableFloorCells.push({x: j, y: i});
-			}
-		});
-	});
+	// 3. we can now replace doors with floors
 
-	return {entities: world, playerPosition: _.clone(playerStartingPosition), dungeonLevel: level};
+	for (let i = 0; i < gameMap.length; i++) {
+		for (let j = 0; j < gameMap[0].length; j++) {
+			if (gameMap[i][j].type === 'door') {
+						gameMap[i][j].type = 'floor'
+			}
+		}
+	}
+
+		console.timeEnd('test3')
+	return {entities: gameMap, playerPosition: _.clone(playerStartingPosition), dungeonLevel: level};
 };
