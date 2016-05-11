@@ -47,6 +47,21 @@ h1
   display: flex
   justify-content: center
 
+.title
+  transition: color 3s
+
+.title-0, .title-1,
+  color: $level1
+
+.title-2, .title-transit-2
+  color: $level2
+
+.title-3, .title-transit-3
+  color: $level3
+
+.title-4, .title-transit-4
+  color: $level4
+
 .row
   display: flex
   justify-content: center
@@ -68,14 +83,6 @@ h1
 .back-4
   background: $level4
 
-.back-death
-  background: red
-  transition: background-color 6s
-
-.back-victory
-  background: green
-  transition: background-color 6s
-
 .back-transit-2
   background: $level2
   transition: background-color 3s
@@ -87,6 +94,14 @@ h1
 .back-transit-4
   background: $level4
   transition: background-color 3s
+
+.back-death
+  background: red
+  transition: background-color 6s
+
+.back-victory
+  background: green
+  transition: background-color 6s
 
 .floor
   background: $floor
