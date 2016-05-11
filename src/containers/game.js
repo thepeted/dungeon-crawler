@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import playerInput, { createLevel, setDungeonLevel } from '../actions/';
+import playerInput, { createLevel, toggleFogMode, setDungeonLevel } from '../actions/';
 import Cell from '../components/cell';
 
 const V_OFFSET = 5; // in ems to match any elements above component in page layout
@@ -82,20 +82,27 @@ class grid extends Component {
 		if (typeof (this.props.grid.dungeonLevel) === 'number') {
 			switch (e.keyCode) {
 				// north
+				case 38:
 				case 87:
 					this.props.playerInput([0, -1]);
 					break;
 				// east
+				case 39:
 				case 68:
 					this.props.playerInput([1, 0]);
 					break;
 				// south
+				case 40:
 				case 83:
 					this.props.playerInput([0, 1]);
 					break;
 				// west
+				case 37:
 				case 65:
 					this.props.playerInput([-1, 0]);
+					break;
+				case 70:
+					this.props.toggleFogMode();
 					break;
 				default:
 					return;
@@ -118,7 +125,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		playerInput: (vector) => dispatch(playerInput(vector)),
 		createLevel: () => dispatch(createLevel()),
-		setDungeonLevel: (level) => dispatch(setDungeonLevel(level))
+		setDungeonLevel: (level) => dispatch(setDungeonLevel(level)),
+		toggleFogMode: () => dispatch(toggleFogMode())
+
 	};
 };
 

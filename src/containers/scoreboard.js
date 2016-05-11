@@ -18,7 +18,7 @@ const Scoreboard = ({ grid, player }) => {
 			<Score
 				iconClass="weapon"
 				title={"Weapon"}
-				value={`${player.weapon.name} (Damage: ${player.weapon.damage})`}
+				value={`${player.weapon.name} (DMG: ${player.weapon.damage})`}
 				/>
 			<Score
 				iconClass="player"
