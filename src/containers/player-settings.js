@@ -1,24 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleFogMode } from '../actions';
+import { toggleFogMode, restartGame } from '../actions';
 
-const PlayerSettings = ({ fogMode, toggleFogMode }) => {
-	return (
-		<div className="panel">
-			<div className="score-item">
-				<input
-					onChange={toggleFogMode}
-					id="toggle"
-					type="checkbox"
-					checked={fogMode}
-					/>
-				<label htmlFor="toggle">
-				Toggle fog mode
-				</label>
+class PlayerSettings extends Component {
+	constructor(){
+		super();
+		this.handleKeyPress = this.handleKeyPress.bind(this);
+	}
+	componentDidMount() {
+		window.addEventListener('keydown', this.handleKeyPress);
+	}
+	render(){
+	  const { fogMode, restartGame, toggleFogMode } = this.props;
+		return (
+			<div className="panel">
+				<div className="score-item">
+					<input
+						onChange={toggleFogMode}
+						id="toggle"
+						type="checkbox"
+						checked={fogMode}
+						/>
+					<label htmlFor="toggle">
+					Toggle fog mode
+					</label>
+				</div>
+				<div className="score-item">
+				<div onClick={restartGame} className="restart-btn"></div>
+				<span className="setting-label">Restart</span>
+				</div>
 			</div>
-		</div>
-	);
+		)
+	}
+	handleKeyPress(e) {
+		switch (e.keyCode) {
+			// north
+			case 70:
+				this.props.toggleFogMode();
+				break;
+			case 82:
+				this.props.restartGame();
+			default:
+				return;
+		}
+	}
 };
 
 const mapStateToProps = ({ ui }) => {
@@ -27,7 +53,8 @@ const mapStateToProps = ({ ui }) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		toggleFogMode: () => dispatch(toggleFogMode())
+		toggleFogMode: () => dispatch(toggleFogMode()),
+		restartGame: () => dispatch(restartGame())
 	};
 };
 

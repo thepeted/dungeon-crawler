@@ -150,6 +150,18 @@ h1
   margin: 0.6em 0
   min-width: 40%
 
+.score-label
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+
+.setting-label
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+  //nasty hack to align with input label
+  margin-bottom: 1px
+
 .icon
   margin-right: 0.5em
   border: 0
@@ -161,12 +173,25 @@ h1
   border-right: 0.5em solid transparent
   border-bottom: 1em solid red
 
+.restart-btn
+  height: 1em
+  width: 1em
+  margin-right: 0.5em
+  border: 1px solid #ddd
+  border-radius: 50%
+  &:hover
+    cursor: pointer
+  &:active
+    background: red
+
+
 input
   position: absolute
   left: -9999px
 
 label
   cursor: pointer
+  //vertical-align: top
 
 label::before
   display: inline-block

@@ -196,3 +196,13 @@ export default (vector) => {
 		dispatch(batchActions(actions));
 	};
 };
+
+export function restartGame() {
+	return (dispatch) => {
+		dispatch(newMessage(`The grid resets itself....`));
+		setTimeout(() => dispatch(batchActions([
+			restart(), createLevel(1), setDungeonLevel(1)
+		])),
+		1000);
+	}
+}

@@ -101,9 +101,6 @@ class grid extends Component {
 				case 65:
 					this.props.playerInput([-1, 0]);
 					break;
-				case 70:
-					this.props.toggleFogMode();
-					break;
 				default:
 					return;
 			}
@@ -125,9 +122,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		playerInput: (vector) => dispatch(playerInput(vector)),
 		createLevel: () => dispatch(createLevel()),
-		setDungeonLevel: (level) => dispatch(setDungeonLevel(level)),
-		toggleFogMode: () => dispatch(toggleFogMode())
-
+		setDungeonLevel: (level) => dispatch(setDungeonLevel(level))
 	};
 };
 
