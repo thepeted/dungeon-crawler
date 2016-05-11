@@ -1,12 +1,24 @@
 @import './resets/reset.css'
 
-$level1: #78d376
-$level2: yellow
-$level3: blue
-$level4: pink
+=entity($color)
+  background: $color
+  border: 1px solid darken($color, 17%)
 
-$player-color: #009e37
 $background-color: #2D2D2D
+
+$floor: #d6d1d1
+
+$enemy: #8ce114
+$weapon: #f3f70c
+$potion: #ff0000
+$player: #fc8d8d
+$exit: #00b9f1
+$boss: #c447e0
+
+$level1: #78d376
+$level2: #75b3d1
+$level3: #abaf33
+$level4: #a733af
 
 body
   background-color: $background-color
@@ -77,27 +89,26 @@ h1
   transition: background-color 3s
 
 .floor
-  background: #ddd
-  border: 1px solid #eee
+  background: $floor
+  border: 1px solid lighten($floor, 2%)
 
 .player
-  background: $player-color
-  border: 1px solid #eee
+  +entity($player)
 
 .enemy
-  background: brown
+  +entity($enemy)
 
 .potion
-  background: red
+  +entity($potion)
 
 .weapon
-  background: yellow
+  +entity($weapon)
 
 .exit
-  background: purple
+  +entity($exit)
 
 .boss
-  background: black
+  +entity($boss)
 
 .sidebar
   display: flex
@@ -119,7 +130,6 @@ h1
   padding: 0.8em 1.2em
   background: rgba(0,0,0,0.2)
 
-
 .score-item
   display: flex
   margin: 0.6em 0
@@ -127,6 +137,14 @@ h1
 
 .icon
   margin-right: 0.5em
+  border: 0
+
+.triangle
+  width: 0
+  height: 0
+  border-left: 0.5em solid transparent
+  border-right: 0.5em solid transparent
+  border-bottom: 1em solid red
 
 input
   position: absolute

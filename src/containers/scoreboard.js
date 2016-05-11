@@ -26,7 +26,7 @@ const Scoreboard = ({ grid, player }) => {
 				value={Math.floor(player.xp / 100)}
 				/>
 			<Score
-				iconClass=""
+				iconClass="triangle"
 				title="XP to level up"
 				value={100 - player.xp % 100}
 				/>
