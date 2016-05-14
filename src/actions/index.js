@@ -117,7 +117,7 @@ export default (vector) => {
 					if (player.health - playerDamageTaken <= 0) {
 						// player dies
 						dispatch(modifyHealth(0));
-						dispatch(setDungeonLevel('death'));
+						setTimeout(() => dispatch(setDungeonLevel('death')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU DIED`)),
 						1000);
 						setTimeout(() => dispatch(newMessage(`Everything goes red..`)),
@@ -138,7 +138,7 @@ export default (vector) => {
 					// the fight is over and the player has won
 					// add XP and move the player
 					if (destination.type === 'boss') {
-						dispatch(setDungeonLevel('victory'));
+						setTimeout(() => dispatch(setDungeonLevel('victory')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU WIN!`)),
 						1000);
 						setTimeout(() => dispatch(newMessage(`The boss emits an almighty scream`)),
@@ -174,9 +174,9 @@ export default (vector) => {
 					createLevel(grid.dungeonLevel + 1)
 				])), 3000);
 				actions.push(
-					newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`),
-					dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`))
+					newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`)
 				);
+				setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)),250)
 				break;
 			case 'potion':
 				actions.push(
