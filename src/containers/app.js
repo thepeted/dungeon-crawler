@@ -1,26 +1,33 @@
+import { connect } from 'react-redux';
 import React from 'react';
+
 
 import Footer from '../components/footer'
 import Game from '../containers/game';
-import Header from '../containers/header';
+import Header from '../components/header';
 import Messages from '../containers/messages';
 import PlayerSettings from '../containers/player-settings';
-import Scoreboard from '../containers/scoreboard';
+import Scoreboard from '../components/scoreboard';
 
-export default () => {
+const App = ({grid, player}) => {
 	return (
 		<div>
-			<Header/>
+			<Header level={grid.dungeonLevel}/>
 			<div id="app">
 				<Game/>
 				<div className="sidebar">
-					<Scoreboard/>
+					<Scoreboard player={player}/>
 					<PlayerSettings/>
 					<Messages/>
 				</div>
 			</div>
 			<Footer/>
 		</div>
-
 	);
 };
+
+const mapStateToProps = ({ grid, player }) => {
+	return { grid, player }
+}
+
+export default connect(mapStateToProps)(App);

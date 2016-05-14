@@ -1,7 +1,8 @@
 import React from 'react';
-import Score from './score';
+import { connect } from 'react-redux';
+import Score from '../components/score';
 
-export default Scoreboard = ({ grid, player }) => {
+const Scoreboard = ({ grid, player }) => {
 	return (
 		<div className="panel scoreboard">
 			<Score
@@ -32,3 +33,9 @@ export default Scoreboard = ({ grid, player }) => {
 		</div>
 	);
 };
+
+const mapStateToProps = ({ grid, player }) => {
+	return { grid, player };
+};
+
+export default connect(mapStateToProps)(Scoreboard);

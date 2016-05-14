@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 import reducers from './reducers';
 
-import App from './components/app';
+import App from './containers/app';
 
 ReactDOM.render(
 	<Provider store={createStoreWithMiddleware(enableBatching(reducers))}>
