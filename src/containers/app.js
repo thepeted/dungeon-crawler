@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 
-import Footer from '../containers/footer'
+import Tips from '../containers/tips'
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
@@ -21,7 +21,7 @@ const App = ({grid, player}) => {
 					<Messages/>
 				</div>
 			</div>
-			<Footer/>
+			<Tips />
 		</div>
 	);
 };
