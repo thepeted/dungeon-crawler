@@ -3,14 +3,12 @@ import * as c from '../constants/settings';
 
 export default (gameMap, level = 1) => {
 
-	// TODO - do we need the '_.clones'?
-
 	// 1. create the entities
 	const bosses = [];
 	if (level === 4) {
 		bosses.push({
-			health: 20,
-			level: 1,
+			health: 400,
+			level: 5,
 			type: 'boss'
 		});
 	}
@@ -18,7 +16,7 @@ export default (gameMap, level = 1) => {
 	const enemies = [];
 	for (let i = 0; i < 7; i++) {
 		enemies.push({
-			health: 100,
+			health: level * 30 + 40,
 			// half of the enememies will be a level higher or lower (except on
 			// level 1, where ~1/4 enemies are a level higher)
 			level: _.random(level, _.random(level - 1 ? level - 1 : level, level + 1)),
@@ -51,7 +49,7 @@ export default (gameMap, level = 1) => {
 		},
 		{
 			name: 'Laser Rifle',
-			damage: 23
+			damage: 19
 		},
 		{
 			name: 'Plasma Pistol',
@@ -59,15 +57,15 @@ export default (gameMap, level = 1) => {
 		},
 		{
 			name: 'Plasma Rifle',
-			damage: 30
+			damage: 28
 		},
 		{
 			name: 'Electric ChainSaw',
-			damage: 33
+			damage: 31
 		},
 		{
 			name: 'Railgun',
-			damage: 37
+			damage: 33
 		},
 		{
 			name: 'Dark Energy Cannon',
@@ -75,14 +73,14 @@ export default (gameMap, level = 1) => {
 		},
 		{
 			name: 'B.F.G',
-			damage: 49
+			damage: 43
 		}
 	];
 
 	const weapons = [];
 	//weapon types will vary based on the level passed to the parent function
 	const qualifying = weaponTypes
-		.filter(weapon => weapon.damage < level * 10 + 20)
+		.filter(weapon => weapon.damage < level * 10 + 10)
       .filter(weapon => weapon.damage > level * 10 - 10);
 	for (let i = 0; i < 3; i++) {
 		const weapon = Object.assign({}, qualifying[_.random(0, qualifying.length - 1)]);
@@ -108,7 +106,6 @@ export default (gameMap, level = 1) => {
 	});
 
 	// 3. we can now replace doors with floors
-
 	for (let i = 0; i < gameMap.length; i++) {
 		for (let j = 0; j < gameMap[0].length; j++) {
 			if (gameMap[i][j].type === 'door') {

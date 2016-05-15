@@ -13,7 +13,6 @@ export default class extends Component {
 				`Level up to increase your damage`,
 				`A new weapon might not be as good as your current one `,
 				`Be sure to gain as much XP as you can in each zone`
-
 			],
 			displayIdx: 0,
 			intervalId: null

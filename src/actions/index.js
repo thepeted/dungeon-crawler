@@ -106,12 +106,12 @@ export default (vector) => {
 
 				if (destination.health > 0) {
 					// enemy attacks player
-					const playerDamageTaken = Math.floor(_.random(5, 7) * destination.level);
+					const playerDamageTaken = Math.floor(_.random(4, 7) * destination.level);
 
 					actions.push(
 						changeEntity(destination, newPosition),
 						modifyHealth(player.health - playerDamageTaken),
-						newMessage(`FIGHT! You hurt the enemy with attack of ${enemyDamageTaken}.	The enemy hits back with an attack of ${playerDamageTaken}`)
+						newMessage(`FIGHT! You hurt the enemy with attack of [${enemyDamageTaken}].	The enemy hits back with an attack of [${playerDamageTaken}].  Enemy has [${destination.health}] health remaining.`)
 					);
 
 					if (player.health - playerDamageTaken <= 0) {
@@ -120,7 +120,7 @@ export default (vector) => {
 						setTimeout(() => dispatch(setDungeonLevel('death')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU DIED`)),
 						1000);
-						setTimeout(() => dispatch(newMessage(`Everything goes red..`)),
+						setTimeout(() => dispatch(newMessage(`Everything goes dark..`)),
 						2000);
 						setTimeout(() => dispatch(newMessage(`You resolve to try harder next time`)),
 						4000);
@@ -138,10 +138,11 @@ export default (vector) => {
 					// the fight is over and the player has won
 					// add XP and move the player
 					if (destination.type === 'boss') {
+						dispatch(changePlayerPosition(newPosition));
 						setTimeout(() => dispatch(setDungeonLevel('victory')), 250);
-						setTimeout(() => dispatch(newMessage(`YOU WIN!`)),
+						setTimeout(() => dispatch(newMessage(`YOU DEFATED THE BOSS!`)),
 						1000);
-						setTimeout(() => dispatch(newMessage(`The boss emits an almighty scream`)),
+						setTimeout(() => dispatch(newMessage(`The BOSS emits an almighty scream`)),
 						2000);
 						setTimeout(() => dispatch(newMessage(`You bask momentarily in your glory`)),
 						4000);
@@ -153,15 +154,15 @@ export default (vector) => {
 						8000);
 					} else {
 						actions.push(
-							addXP(20 * destination.level),
+							addXP(10),
 							changeEntity({ type: 'floor'}, [x, y]),
 							changeEntity(newPlayer, newPosition),
 							changePlayerPosition(newPosition),
-							newMessage(`VICTORY! Your attack of ${enemyDamageTaken} is too powerful for the enemy, who dissolves before your very eyes.`)
+							newMessage(`VICTORY! Your attack of [${enemyDamageTaken}] is too powerful for the enemy, who dissolves before your very eyes.`)
 						);
-						setTimeout(() => dispatch(newMessage(`You gain 20XP and feel yourself growing stronger..`)),
+						setTimeout(() => dispatch(newMessage(`You gain 10XP and feel yourself growing stronger..`)),
 						2500);
-						if ((player.xp + 20) % 100 === 0) {
+						if ((player.xp + 10) % 100 === 0) {
 							setTimeout(() => dispatch(newMessage(`LEVEL UP!`)), 5000);
 						}
 					}
@@ -180,14 +181,14 @@ export default (vector) => {
 				break;
 			case 'potion':
 				actions.push(
-					modifyHealth(player.health + 20),
-					newMessage(`You drink a potion for 20 health`)
+					modifyHealth(player.health + 30),
+					newMessage(`You drink a potion for [30] health`)
 				);
 				break;
 			case 'weapon':
 				actions.push(
 					addWeapon(destination),
-					newMessage(`You pick up the ${destination.name}`)
+					newMessage(`You pick up a ${destination.name}`)
 				);
 				break;
 			default:
