@@ -26,16 +26,17 @@ body
   color: #ddd
 
 .container
-  margin-left: 1rem
-  margin-right: 1rem
-  margin-bottom: 1rem
+  margin-left: 1em
+  margin-right: 1em
+  margin-bottom: 1em
 
 .strip
   display: flex
   justify-content: center
-  margin-top: 1rem
-  margin-bottom: 1rem
+  margin-top: 1em
+  margin-bottom: 1em
   padding: 0.8em 1.2em
+  font-size: 1.2em
   background: rgba(0,0,0,0.2)
 
 h1
@@ -96,11 +97,11 @@ h1
   transition: background-color 3s
 
 .back-death
-  background: red
+  background: #000
   transition: background-color 6s
 
 .back-victory
-  background: green
+  background: #fff
   transition: background-color 6s
 
 .floor
@@ -128,10 +129,10 @@ h1
 .sidebar
   display: flex
   flex-direction: column
-  margin-left: 1rem
-  margin-right: 1rem
-  width: 16rem
-  font-size: 0.8rem
+  margin-left: 1em
+  margin-right: 1em
+  width: 20em
+  font-size: 0.9em
   color: #ddd
 
 .grid-wrapper
@@ -159,8 +160,8 @@ h1
   display: flex
   flex-direction: column
   justify-content: flex-end
-  //nasty hack to align with input label
-  margin-bottom: 1px
+  cursor: pointer
+
 
 .icon
   margin-right: 0.5em
@@ -191,14 +192,13 @@ input
 
 label
   cursor: pointer
-  //vertical-align: top
 
 label::before
   display: inline-block
   content: ''
   height: 1em
   width: 1em
-  border: 1px solid yellow
+  border: 1px solid #ddd
   margin-right: 0.5em
   vertical-align: bottom
 
@@ -212,7 +212,7 @@ input:checked + label::before
     justify-content: flex-end
     margin: 0
   li
-    margin-bottom: 0.5rem
+    margin-bottom: 0.5em
     list-style-type: none
     opacity: 0.3
     &:last-child

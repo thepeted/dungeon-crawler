@@ -16,8 +16,8 @@ class grid extends Component {
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 		this.handleResize = this.handleResize.bind(this);
 
-		this.VP_HEIGHT_OFFSET = 4; // in ems to match elements above this component
-		this.VP_MINIMUM_HEIGHT = 15 // in ems
+		this.VP_HEIGHT_OFFSET = 6; // in ems to match elements above this component
+		this.VP_MINIMUM_HEIGHT = 14 // in ems
 		// set ratios for determining the viewport size
 		this.VP_WIDTH_RATIO = 30
 		this.VP_HEIGHT_RATIO = 21
