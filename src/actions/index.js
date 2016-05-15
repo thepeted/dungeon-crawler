@@ -207,9 +207,6 @@ export function openingMessages() {
 		setTimeout(()=> {
 			dispatch(newMessage(`'Hmm... there must be a way out of here..'`))
 		},6000);
-		setTimeout(()=> {
-			dispatch(newMessage(`You set off exploring`))
-		},9000);
 	}
 }
 
