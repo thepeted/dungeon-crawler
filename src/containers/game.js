@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import playerInput, {
 	createLevel,
 	openingMessages,
-	toggleFogMode,
 	setDungeonLevel
 } from '../actions/';
 
@@ -23,14 +22,14 @@ class grid extends Component {
 		this.handleResize = this.handleResize.bind(this);
 
 		this.VP_HEIGHT_OFFSET = 5; // in ems to match elements above this component
-		this.VP_MINIMUM_HEIGHT = 22 // in ems
+		this.VP_MINIMUM_HEIGHT = 22; // in ems
 		// set ratios for determining the viewport size
-		this.VP_WIDTH_RATIO = 30
-		this.VP_HEIGHT_RATIO = 21
+		this.VP_WIDTH_RATIO = 30;
+		this.VP_HEIGHT_RATIO = 21;
 	}
 
 	componentWillMount() {
-		//set the initial veiwport size
+		// set the initial veiwport size
 		const viewportWidth = window.innerWidth / this.VP_WIDTH_RATIO;
 		const viewportHeight = Math.max(
 			this.VP_MINIMUM_HEIGHT,

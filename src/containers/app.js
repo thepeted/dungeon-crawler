@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
-
-import Tips from '../containers/tips'
+import Tips from '../containers/tips';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
@@ -21,13 +20,13 @@ const App = ({grid, player}) => {
 					<Messages/>
 				</div>
 			</div>
-			<Tips />
+			<Tips/>
 		</div>
 	);
 };
 
 const mapStateToProps = ({ grid, player }) => {
-	return { grid, player }
-}
+	return { grid, player };
+};
 
 export default connect(mapStateToProps)(App);

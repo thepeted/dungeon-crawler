@@ -1,7 +1,6 @@
 import update from 'react-addons-update';
 import * as t from '../constants/action-types';
 
-
 const initialState = {
 	entities: [[]],
 	dungeonLevel: 0,

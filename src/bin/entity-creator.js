@@ -2,7 +2,6 @@ import _ from 'lodash';
 import * as c from '../constants/settings';
 
 export default (gameMap, level = 1) => {
-
 	// 1. create the entities
 	const bosses = [];
 	if (level === 4) {
@@ -78,10 +77,10 @@ export default (gameMap, level = 1) => {
 	];
 
 	const weapons = [];
-	//weapon types will vary based on the level passed to the parent function
+	// weapon types will vary based on the level passed to the parent function
 	const qualifying = weaponTypes
 		.filter(weapon => weapon.damage < level * 10 + 10)
-      .filter(weapon => weapon.damage > level * 10 - 10);
+			.filter(weapon => weapon.damage > level * 10 - 10);
 	for (let i = 0; i < 3; i++) {
 		const weapon = Object.assign({}, qualifying[_.random(0, qualifying.length - 1)]);
 		weapon.type = 'weapon';
@@ -90,7 +89,7 @@ export default (gameMap, level = 1) => {
 
 	// 2. randomly place all the entities on to floor cells on the game map.
 
-	//// we'll need to return the players starting co-ordinates
+	// we'll need to return the players starting co-ordinates
 	let playerPosition = [];
 	[potions, enemies, weapons, exits, players, bosses].forEach(entities => {
 		while (entities.length) {
@@ -109,7 +108,7 @@ export default (gameMap, level = 1) => {
 	for (let i = 0; i < gameMap.length; i++) {
 		for (let j = 0; j < gameMap[0].length; j++) {
 			if (gameMap[i][j].type === 'door') {
-						gameMap[i][j].type = 'floor'
+				gameMap[i][j].type = 'floor';
 			}
 		}
 	}

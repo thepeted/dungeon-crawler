@@ -16,11 +16,11 @@ export default class extends Component {
 			],
 			displayIdx: 0,
 			intervalId: null
-		}
+		};
 	}
 	componentDidMount() {
-		let counter = 0;
-		this.state.intervalId = setInterval(()=> {
+		let counter = 1;
+		const intervalId = setInterval(() => {
 			if (counter === this.state.tips.length) {
 				counter = 0;
 			}
@@ -28,16 +28,20 @@ export default class extends Component {
 				displayIdx: counter
 			});
 			counter++;
-		},10000);
+		}, 10000);
+
+		this.setState({
+			intervalId
+		});
 	}
 	componentWillUnmount() {
 		clearInterval(this.state.intervalId);
 	}
 	render() {
 		return (
-			<div className='strip'>
-	    	<p> Tip: {this.state.tips[this.state.displayIdx]}</p>
-	    </div>
-		)
+			<div className="strip">
+				<p> Tip: {this.state.tips[this.state.displayIdx]}</p>
+			</div>
+		);
 	}
 }

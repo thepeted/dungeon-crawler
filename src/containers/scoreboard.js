@@ -1,7 +1,7 @@
 import React from 'react';
 import Score from './score';
 
-export default Scoreboard = ({ grid, player }) => {
+export default ({ grid, player }) => {
 	return (
 		<div className="panel scoreboard">
 			<Score

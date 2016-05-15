@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { toggleFogMode, restartGame } from '../actions';
 
 class PlayerSettings extends Component {
-	constructor(){
+	constructor() {
 		super();
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 	componentDidMount() {
 		window.addEventListener('keydown', this.handleKeyPress);
 	}
-	render(){
-	  const { fogMode, restartGame, toggleFogMode } = this.props;
+	render() {
+		const { fogMode, restartGame, toggleFogMode } = this.props;
 		return (
 			<div className="panel">
 				<div className="score-item">
@@ -27,11 +27,11 @@ class PlayerSettings extends Component {
 					</label>
 				</div>
 				<div className="score-item">
-				<div onClick={restartGame} className="restart-btn"></div>
-				<span onClick={restartGame} className="setting-label">Restart</span>
+					<div onClick={restartGame} className="restart-btn"></div>
+					<span onClick={restartGame} className="setting-label">Restart</span>
 				</div>
 			</div>
-		)
+		);
 	}
 	handleKeyPress(e) {
 		switch (e.keyCode) {
@@ -41,11 +41,12 @@ class PlayerSettings extends Component {
 				break;
 			case 82:
 				this.props.restartGame();
+				break;
 			default:
 				return;
 		}
 	}
-};
+}
 
 const mapStateToProps = ({ ui }) => {
 	return { fogMode: ui.fogMode };
