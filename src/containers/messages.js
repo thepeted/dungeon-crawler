@@ -6,7 +6,7 @@ const Messages = ({ messages }) => {
 		<div className="panel messages">
 			<ul>
 				{
-					messages.slice(-3).map((msg, i) => {
+					messages.slice(-4).map((msg, i) => {
 						return <li key={i}>{msg}</li>;
 					})
 				}

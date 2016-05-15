@@ -2,7 +2,13 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import playerInput, { createLevel, toggleFogMode, setDungeonLevel } from '../actions/';
+import playerInput, {
+	createLevel,
+	openingMessages,
+	toggleFogMode,
+	setDungeonLevel
+} from '../actions/';
+
 import Cell from '../components/cell';
 
 class grid extends Component {
@@ -38,6 +44,7 @@ class grid extends Component {
 	componentDidMount() {
 		window.addEventListener('keydown', _.throttle(this.handleKeyPress, 100));
 		window.addEventListener('resize', _.debounce(this.handleResize, 500));
+		this.props.triggerOpeningMessages();
 	}
 
 	handleKeyPress(e) {
@@ -139,7 +146,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		playerInput: (vector) => dispatch(playerInput(vector)),
 		createLevel: () => dispatch(createLevel()),
-		setDungeonLevel: (level) => dispatch(setDungeonLevel(level))
+		setDungeonLevel: (level) => dispatch(setDungeonLevel(level)),
+		triggerOpeningMessages: () => dispatch(openingMessages())
 	};
 };
 

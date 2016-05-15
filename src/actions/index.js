@@ -197,6 +197,21 @@ export default (vector) => {
 	};
 };
 
+export function openingMessages() {
+	return (dispatch) => {
+		dispatch(newMessage(`Welcome to The Grid...`));
+		setTimeout(()=> {
+			dispatch(newMessage(`You find yourself in a world filled with strange cells`))
+		},3000);
+		setTimeout(()=> {
+			dispatch(newMessage(`'Hmm... there must be a way out of here..'`))
+		},6000);
+		setTimeout(()=> {
+			dispatch(newMessage(`You set off exploring`))
+		},9000);
+	}
+}
+
 export function restartGame() {
 	return (dispatch) => {
 		dispatch(newMessage(`The grid resets itself....`));
