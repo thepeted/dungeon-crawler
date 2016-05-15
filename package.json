@@ -1,7 +1,7 @@
 {
-  "name": "react-babel-sass-webpack",
+  "name": "grid-dungeon-crawler",
   "version": "1.0.0",
-  "description": "Simple Webpack starter with for React with Sass",
+  "description": "Roguelike with randomly generated levels",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thepeted/react-babel-sass-webpack.git"
+    "url": "git+https://github.com/thepeted/dungeon-crawler"
   },
   "author": "Peter Daily",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/thepeted/react-babel-sass-webpack/issues"
+    "url": "https://github.com/thepeted/dungeon-crawler/issues"
   },
-  "homepage": "https://github.com/thepeted/react-babel-sass-webpack#readme",
+  "homepage": "http://thepeted.github.io/dungeon-crawler",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.7.6",
@@ -63,7 +63,6 @@
       "babel/array-bracket-spacing": "off",
 			"babel/arrow-parens": "off",
 			"react/prop-types": "off"
-
     }
   }
 }
