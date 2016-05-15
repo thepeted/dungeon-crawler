@@ -28,7 +28,7 @@ class PlayerSettings extends Component {
 				</div>
 				<div className="score-item">
 				<div onClick={restartGame} className="restart-btn"></div>
-				<span className="setting-label">Restart</span>
+				<span onClick={restartGame} className="setting-label">Restart</span>
 				</div>
 			</div>
 		)
