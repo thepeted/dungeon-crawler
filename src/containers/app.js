@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 
-import Footer from '../components/footer'
+import Footer from '../containers/footer'
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
