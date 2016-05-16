@@ -15,7 +15,7 @@ const App = ({grid, player}) => {
 			<div id="app">
 				<Game/>
 				<div className="sidebar">
-					<Scoreboard player={player}/>
+					<Scoreboard player={player} grid={grid}/>
 					<PlayerSettings/>
 					<Messages/>
 				</div>
