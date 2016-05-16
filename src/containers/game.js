@@ -10,7 +10,7 @@ import playerInput, {
 
 import Cell from '../components/cell';
 
-class grid extends Component {
+class Grid extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -155,4 +155,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(grid);
+export default connect(mapStateToProps, mapDispatchToProps)(Grid);
