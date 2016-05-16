@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import React from 'react';
 
-import Tips from '../containers/tips';
 import Game from '../containers/game';
 import Header from '../components/header';
 import Messages from '../containers/messages';
 import PlayerSettings from '../containers/player-settings';
 import Scoreboard from '../components/scoreboard';
+import Tips from '../containers/tips';
 
 const App = ({grid, player}) => {
 	return (
