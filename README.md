@@ -1,24 +1,36 @@
-## Rougelike Dungeon Crawler (React and Redux)
+# 'The Grid' - Rougelike Dungeon Crawler (React and Redux)
 
-An exercise as part of the [FreeCodeCamp](http://freecodecamp.com) curriculum.
+A 2D Dungeon Crawler implemented in React and Redux, including `redux-thunk` and `redux-batched-actions` middleware.
 
-Work in progress...
+Check out the live demo [here](https://thepeted.github.io/dungeon-crawler).
 
-User Stories TODO:
-- ~~User Story: I have health, a level, and a weapon. I can pick up a better weapon. I can pick up health items~~.
 
-- ~~User Story: All the items and enemies on the map are arranged at random.~~
+## Features
+- Randomly generated map.  The viewport of the map is sized based on browser window size.
 
-- ~~User Story: I can move throughout a map, discovering items.~~
+- You have health, a level, and a weapon. You can pick up a better weapon. You can pick up health items.
 
-- ~~User Story: I can move anywhere within the map's boundaries, but I can't move through an enemy until I've beaten it.~~
+- All the items and enemies on the map are arranged at random.
 
-- ~~User Story: Much of the map is hidden. When I take a step, all spaces that are within a certain number of spaces from me are revealed.~~
+- You can move throughout the map, discovering items.
 
-- ~~User Story: When I beat an enemy, the enemy goes away and I get XP, which eventually increases my level.~~
+- You can move anywhere within the map's boundaries, but you can't move through an enemy until you've beaten it.
 
-- ~~User Story: When I fight an enemy, we take turns damaging each other until one of us loses. I do damage based off of my level and my weapon. The enemy does damage based off of its level. Damage is somewhat random within a range.~~
+- There is an optional 'fog mode' whereby spaces that are within a certain number of spaces from you are hidden.
 
-- ~~User Story: When I find and beat the boss, I win.~~
+- When you beat an enemy, the enemy goes away and you get XP, which eventually increases your level.
 
-- User Story: The game should be challenging, but theoretically winnable.
+- When you fight an enemy, you take turns damaging each other until one of you loses. Damage based off of your level and your weapon. The enemy does damage based off of its level. Damage is somewhat random within a range.
+
+- When you find and beat the boss, you win.
+
+- The game should be challenging, but theoretically winnable.
+
+## Run locally
+
+Checkout this repo and
+```
+> npm install
+> npm start
+```
+The game will be running at http://localhost:8080/
