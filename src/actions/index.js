@@ -75,8 +75,7 @@ export function toggleFogMode() {
 // a thunk!
 export default (vector) => {
 	return (dispatch, getState) => {
-
-		let { grid, player } = getState();
+		const { grid, player } = getState();
 
 		// cache some useful variables
 		const [ x, y ] = grid.playerPosition.slice(0); // get current location
@@ -98,7 +97,6 @@ export default (vector) => {
 		switch (destination.type) {
 			case 'boss':
 			case 'enemy': {
-
 				const playerLevel = Math.floor(player.xp / 100);
 				// player attacks enemy
 				const enemyDamageTaken = Math.floor(player.weapon.damage * _.random(1, 1.3) * playerLevel);
@@ -138,7 +136,13 @@ export default (vector) => {
 					// the fight is over and the player has won
 					// add XP and move the player
 					if (destination.type === 'boss') {
-						dispatch(changePlayerPosition(newPosition));
+						actions.push(
+							addXP(10),
+							changeEntity({ type: 'floor'}, [x, y]),
+							changeEntity(newPlayer, newPosition),
+							changePlayerPosition(newPosition),
+							newMessage(`VICTORY! Your attack of [${enemyDamageTaken}] is too powerful for the enemy, who dissolves before your very eyes.`)
+						);
 						setTimeout(() => dispatch(setDungeonLevel('victory')), 250);
 						setTimeout(() => dispatch(newMessage(`YOU DEFATED THE BOSS!`)),
 						1000);
@@ -177,7 +181,7 @@ export default (vector) => {
 				actions.push(
 					newMessage(`The cells start to shift... you transit to zone ${grid.dungeonLevel + 1}`)
 				);
-				setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)),250)
+				setTimeout(() => dispatch(setDungeonLevel(`transit-${grid.dungeonLevel + 1}`)), 250);
 				break;
 			case 'potion':
 				actions.push(
@@ -201,13 +205,13 @@ export default (vector) => {
 export function openingMessages() {
 	return (dispatch) => {
 		dispatch(newMessage(`Welcome to The Grid...`));
-		setTimeout(()=> {
-			dispatch(newMessage(`You find yourself in a world filled with strange cells`))
-		},3000);
-		setTimeout(()=> {
-			dispatch(newMessage(`'Hmm... there must be a way out of here..'`))
-		},6000);
-	}
+		setTimeout(() => {
+			dispatch(newMessage(`You find yourself in a world filled with strange cells`));
+		}, 3000);
+		setTimeout(() => {
+			dispatch(newMessage(`'Hmm... there must be a way out of here..'`));
+		}, 6000);
+	};
 }
 
 export function restartGame() {
@@ -217,5 +221,5 @@ export function restartGame() {
 			restart(), createLevel(1), setDungeonLevel(1)
 		])),
 		1000);
-	}
+	};
 }
