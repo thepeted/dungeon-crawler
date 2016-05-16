@@ -8,9 +8,15 @@ class PlayerSettings extends Component {
 		super();
 		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
+
 	componentDidMount() {
 		window.addEventListener('keydown', this.handleKeyPress);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyPress);
+	}
+
 	render() {
 		const { fogMode, restartGame, toggleFogMode } = this.props;
 		return (

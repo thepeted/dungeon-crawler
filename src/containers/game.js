@@ -46,6 +46,11 @@ class grid extends Component {
 		this.props.triggerOpeningMessages();
 	}
 
+	componentWillUnmount() {
+		window.removeEventListener('keydown', _.throttle(this.handleKeyPress, 100));
+		window.removeEventListener('resize', _.debounce(this.handleResize, 500));
+	}
+
 	handleKeyPress(e) {
 		if (typeof (this.props.grid.dungeonLevel) === 'number') {
 			switch (e.keyCode) {
