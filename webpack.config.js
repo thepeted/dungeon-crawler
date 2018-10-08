@@ -55,7 +55,9 @@ if (TARGET === 'start' || !TARGET){
       stats: 'errors-only',
       //windows and vm users may need alternative host and port settings
       host: process.env.HOST,
-      port: process.env.PORT
+      port: process.env.PORT,
+      compress: true,
+      disableHostCheck: true,
     },
     module: {
       loaders: [

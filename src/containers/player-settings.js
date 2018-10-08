@@ -90,7 +90,10 @@ class PlayerSettings extends Component {
 			})
 		}
 
-		if (aroundMe === '') aroundMe = "not much to see here"
+		if (aroundMe === '') {
+			aroundMe = "not much to see here";
+			iconClass = 'floor';
+		}
 
 		switch (e.keyCode) {
 			// north
