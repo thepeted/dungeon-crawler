@@ -59,8 +59,8 @@ export function restart() {
 	};
 }
 
-export function faceDirection(direction, aroundMe) {
-	const payload = {direction,aroundMe};
+export function faceDirection(direction, aroundMe, iconClass) {
+	const payload = {direction, aroundMe, iconClass};
 	return {
 		type: t.FACE_DIRECTION,
 		payload

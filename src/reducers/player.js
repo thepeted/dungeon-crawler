@@ -8,10 +8,10 @@ const initialState = {
 		damage: 10
 	},
 	examining: {
-		type: "weapon",
-		title: "sword",
+		iconClass: "floor",
+		title: "",
 		direction: "Look",
-		aroundMe: "",
+		aroundMe: "press l to look around",
 	}
 };
 

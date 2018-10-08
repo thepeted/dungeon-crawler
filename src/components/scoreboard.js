@@ -32,7 +32,7 @@ export default ({ grid, player }) => {
 				value={100 - player.xp % 100}
 				/>
 				<Score
-					iconClass={player.examining.type}
+					iconClass={player.examining.iconClass}
 					title={player.examining.direction}
 					value={player.examining.aroundMe}
 					/>

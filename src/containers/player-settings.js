@@ -45,6 +45,7 @@ class PlayerSettings extends Component {
 
 		const entitiesBesidePlay = [];
 		let aroundMe = '';
+		let iconClass = '';
 
 		entities.map(row => {
 			const closeBy = row.filter( entity => entity.distanceFromPlayer === 1);
@@ -83,6 +84,7 @@ class PlayerSettings extends Component {
 									break;
 						}
 						aroundMe += about;
+						iconClass = entity.type;
 					}
 				})
 			})
@@ -99,19 +101,19 @@ class PlayerSettings extends Component {
 				this.props.restartGame();
 				break;
 			case 76:
-					this.props.faceDirection("Look", aroundMe);
+					this.props.faceDirection("Look", aroundMe, iconClass);
 					break;
 			case 85:
-				this.props.faceDirection("North", aroundMe);
+				this.props.faceDirection("North", aroundMe, iconClass);
 				break;
 			case 73:
-					this.props.faceDirection("South", aroundMe);
+					this.props.faceDirection("South", aroundMe, iconClass);
 					break;
 			case 79:
-					this.props.faceDirection("East", aroundMe);
+					this.props.faceDirection("East", aroundMe, iconClass);
 					break;
 			case 80:
-					this.props.faceDirection("West", aroundMe);
+					this.props.faceDirection("West", aroundMe, iconClass);
 					break;
 			default:
 				return;
@@ -127,7 +129,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleFogMode: () => dispatch(toggleFogMode()),
 		restartGame: () => dispatch(restartGame()),
-		faceDirection: (direction, aroundMe) => dispatch(faceDirection(direction, aroundMe)),
+		faceDirection: (direction, aroundMe, iconClass) => dispatch(faceDirection(direction, aroundMe, iconClass)),
 	};
 };
 
