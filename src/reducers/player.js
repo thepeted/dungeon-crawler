@@ -6,6 +6,12 @@ const initialState = {
 	weapon: {
 		name: 'Taser',
 		damage: 10
+	},
+	examining: {
+		type: "weapon",
+		title: "sword",
+		direction: "Look",
+		aroundMe: "",
 	}
 };
 
@@ -19,6 +25,9 @@ export default (state = initialState, { type, payload }) => {
 			return { ...state, health: payload };
 		case t.RESTART:
 			return initialState;
+		case t.FACE_DIRECTION:
+		  const examining = state.examining;
+			return { ...state, examining: {...examining, ...payload} };
 		default:
 			return state;
 	}

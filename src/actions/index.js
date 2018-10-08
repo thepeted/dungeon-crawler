@@ -59,6 +59,14 @@ export function restart() {
 	};
 }
 
+export function faceDirection(direction, aroundMe) {
+	const payload = {direction,aroundMe};
+	return {
+		type: t.FACE_DIRECTION,
+		payload
+	};
+}
+
 export function setDungeonLevel(payload) {
 	return {
 		type: t.SET_DUNGEON_LEVEL,

@@ -8,3 +8,4 @@ export const NEW_MESSAGE = 'NEW_MESSAGE';
 export const RESTART = 'RESTART';
 export const SET_DUNGEON_LEVEL = 'SET_DUNGEON_LEVEL';
 export const TOGGLE_FOG_MODE = 'TOGGLE_FOG_MODE';
+export const FACE_DIRECTION = 'FACE_DIRECTION';
