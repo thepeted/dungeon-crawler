@@ -25,7 +25,7 @@ export default (state = initialState, { type, payload }) => {
 			return { ...state, health: payload };
 		case t.RESTART:
 			return initialState;
-		case t.FACE_DIRECTION:
+		case t.LOOK_AROUND:
 		  const examining = state.examining;
 			return { ...state, examining: {...examining, ...payload} };
 		default:

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleFogMode, restartGame, faceDirection } from '../actions';
+import { toggleFogMode, restartGame, lookAround } from '../actions';
 
 class PlayerSettings extends Component {
 	constructor() {
@@ -104,19 +104,7 @@ class PlayerSettings extends Component {
 				this.props.restartGame();
 				break;
 			case 76:
-					this.props.faceDirection("Look", aroundMe, iconClass);
-					break;
-			case 85:
-				this.props.faceDirection("North", aroundMe, iconClass);
-				break;
-			case 73:
-					this.props.faceDirection("South", aroundMe, iconClass);
-					break;
-			case 79:
-					this.props.faceDirection("East", aroundMe, iconClass);
-					break;
-			case 80:
-					this.props.faceDirection("West", aroundMe, iconClass);
+					this.props.lookAround("Look", aroundMe, iconClass);
 					break;
 			default:
 				return;
@@ -132,7 +120,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleFogMode: () => dispatch(toggleFogMode()),
 		restartGame: () => dispatch(restartGame()),
-		faceDirection: (direction, aroundMe, iconClass) => dispatch(faceDirection(direction, aroundMe, iconClass)),
+		lookAround: (action, aroundMe, iconClass) => dispatch(lookAround(action, aroundMe, iconClass)),
 	};
 };
 

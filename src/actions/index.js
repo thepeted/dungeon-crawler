@@ -59,10 +59,10 @@ export function restart() {
 	};
 }
 
-export function faceDirection(direction, aroundMe, iconClass) {
+export function lookAround(direction, aroundMe, iconClass) {
 	const payload = {direction, aroundMe, iconClass};
 	return {
-		type: t.FACE_DIRECTION,
+		type: t.LOOK_AROUND,
 		payload
 	};
 }
