@@ -84,7 +84,6 @@ export function lookAround(entities) {
 			entities.map( entity => {
 				const type = (entity.type === 0) ? "wall" : entity.type;
 				if (type !== "floor" && type !== "wall") {
-					console.log("entity: ", entity)
 					let about = '';
 					switch(entity.type) {
 						case "weapon" :
