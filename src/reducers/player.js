@@ -10,7 +10,7 @@ const initialState = {
 	examining: {
 		iconClass: "floor",
 		title: "",
-		direction: "Look",
+		action: "Look",
 		aroundMe: "press l to look around",
 	}
 };

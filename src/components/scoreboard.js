@@ -33,7 +33,7 @@ export default ({ grid, player }) => {
 				/>
 				<Score
 					iconClass={player.examining.iconClass}
-					title={player.examining.direction}
+					title={player.examining.action}
 					value={player.examining.aroundMe}
 					/>
 		</div>

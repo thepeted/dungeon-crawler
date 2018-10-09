@@ -59,8 +59,63 @@ export function restart() {
 	};
 }
 
-export function lookAround(direction, aroundMe, iconClass) {
-	const payload = {direction, aroundMe, iconClass};
+export function lookAround(entities) {
+
+	const entitiesBesidePlay = [];
+	let aroundMe = '';
+	let iconClass = '';
+
+	entities.map(row => {
+		const closeBy = row.filter( entity => entity.distanceFromPlayer === 1);
+		if (closeBy.length > 0) entitiesBesidePlay.push(closeBy)
+	});
+
+	if (entitiesBesidePlay.length > 0) {
+
+		const enemy = {
+			1:"Rat",
+			2:"Kobold",
+			3:"Dark Elf",
+			4:"Troll",
+			5:"Boss"
+		}
+
+		entitiesBesidePlay.map(entities => {
+			entities.map( entity => {
+				const type = (entity.type === 0) ? "wall" : entity.type;
+				if (type !== "floor" && type !== "wall") {
+					console.log("entity: ", entity)
+					let about = '';
+					switch(entity.type) {
+						case "weapon" :
+							about = " " + entity.name + " " + entity.damage
+							break;
+						case "boss" :
+						case "enemy" :
+								about = " " + enemy[entity.level] + " lvl " + entity.level + " health " + entity.health;
+								break;
+						case "exit" :
+							about = " Stairs leading down ";
+							break;
+						case "potion" :
+								about = " Health Potion ";
+								break;
+					}
+					aroundMe += about;
+					iconClass = entity.type;
+				}
+			})
+		})
+	}
+
+	if (aroundMe === '') {
+		aroundMe = "not much to see here";
+		iconClass = 'floor';
+	}
+
+	const action = "Look";
+
+	const payload = {action, aroundMe, iconClass};
 	return {
 		type: t.LOOK_AROUND,
 		payload
