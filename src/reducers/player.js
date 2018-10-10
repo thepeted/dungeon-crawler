@@ -6,6 +6,12 @@ const initialState = {
 	weapon: {
 		name: 'Taser',
 		damage: 10
+	},
+	examining: {
+		iconClass: "floor",
+		title: "",
+		action: "Look",
+		aroundMe: "press l to look around",
 	}
 };
 
@@ -19,6 +25,9 @@ export default (state = initialState, { type, payload }) => {
 			return { ...state, health: payload };
 		case t.RESTART:
 			return initialState;
+		case t.LOOK_AROUND:
+		  const examining = state.examining;
+			return { ...state, examining: {...examining, ...payload} };
 		default:
 			return state;
 	}

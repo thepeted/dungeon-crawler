@@ -2,6 +2,8 @@ import React from 'react';
 import Score from './score';
 
 export default ({ grid, player }) => {
+	//console.log("grid ", grid)
+	//console.log("player ", player)
 	return (
 		<div className="panel scoreboard">
 			<Score
@@ -29,6 +31,11 @@ export default ({ grid, player }) => {
 				title="XP to level up"
 				value={100 - player.xp % 100}
 				/>
+				<Score
+					iconClass={player.examining.iconClass}
+					title={player.examining.action}
+					value={player.examining.aroundMe}
+					/>
 		</div>
 	);
 };

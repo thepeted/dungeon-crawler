@@ -6,12 +6,13 @@ export default class extends Component {
 		this.state = {
 			tips: [
 				`Use WASD or arrow keys to move`,
+				`Press L to look at tiles around you`,
 				`Defeat the Boss in Zone 4 to win`,
 				`Toggle Fog Mode with the 'F' key`,
 				`Restart the game with the 'R' key`,
 				`Defeat enemies to increase your XP`,
 				`Level up to increase your damage`,
-				`A new weapon might not be as good as your current one `,
+				`A new weapon might not be as good as your current one`,
 				`Be sure to gain as much XP as you can in each zone`
 			],
 			displayIdx: 0,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleFogMode, restartGame } from '../actions';
+import { toggleFogMode, restartGame, lookAround } from '../actions';
 
 class PlayerSettings extends Component {
 	constructor() {
@@ -40,6 +40,7 @@ class PlayerSettings extends Component {
 		);
 	}
 	handleKeyPress(e) {
+
 		switch (e.keyCode) {
 			// north
 			case 70:
@@ -48,20 +49,24 @@ class PlayerSettings extends Component {
 			case 82:
 				this.props.restartGame();
 				break;
+			case 76:
+					this.props.lookAround(this.props.grid.entities);
+					break;
 			default:
 				return;
 		}
 	}
 }
 
-const mapStateToProps = ({ ui }) => {
-	return { fogMode: ui.fogMode };
+const mapStateToProps = ({ui, grid, player}) => {
+	return { fogMode: ui.fogMode, grid, player};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		toggleFogMode: () => dispatch(toggleFogMode()),
-		restartGame: () => dispatch(restartGame())
+		restartGame: () => dispatch(restartGame()),
+		lookAround: (entities) => dispatch(lookAround(entities)),
 	};
 };
 
